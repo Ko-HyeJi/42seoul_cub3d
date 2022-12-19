@@ -15,7 +15,7 @@ double normalize_angle(double ang)
 	return ang;
 }
 
-void ray_init(t_ray *p_ray, double ang)//t_all이 아니라 t_ray로
+void ray_init(t_ray *p_ray, double ang)
 {
 	p_ray->ray_angle = normalize_angle(ang);
 	p_ray->xhit_wall = 0;
@@ -57,7 +57,6 @@ void calc_ray(t_all *p_all, t_temp_ray *hv)
 	while (xnext_touch >= 0 && xnext_touch <= WINDOW_WID
 		&& ynext_touch >= 0 && ynext_touch <= WINDOW_HEI)
 	{
-		//삼항 생략
 		if (hit_wall(xnext_touch, ynext_touch - (p_all->ray.ray_faces_up), p_all))
 		{
 			hv->found_wallHit = true;
@@ -144,44 +143,48 @@ void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 	calc_ray(p_all, p_vert);
 }
 
-void draw_line(t_all *p_all, double xa, double ya, double xb, double yb)
+void set_point(t_point *p_point, double x, double y)
+{
+	p_point->x = x;
+	p_point->y = y;
+}
+
+void draw_line(t_all *p_all, double dx, double dy)
 {
 	double	ray_x;
 	double	ray_y;
-	double	dx;
-	double	dy;
 	double	max_val;
 	int		x;
 	int		y;
+	t_point	p1;
+	t_point	p2;
 
 	ray_x = p_all->player.x;
 	ray_y = p_all->player.y;
-	dx = xa - xb;
-	dy = ya - yb;
 	max_val = fmax(fabs(dx), fabs(dy));
+	if (max_val == 0)
+		return ;
 	x = 0;
 	y = 0;
 	dx /= max_val;
 	dy /= max_val;
 	while (1)
 	{
-		if (!hit_wall(ray_x, ray_y, p_all))
+		set_point(&p1, ray_x, ray_y);
+		set_point(&p2, ray_x + dx, ray_y + dy);
+		if (!hit_wall(ray_x + dx, ray_y + dy, p_all))
 		{
-			locate_for_mini(&x, &y, ray_x, ray_y, p_all);
-			p_all->img.data[WINDOW_WID * y + x] = 0xFF0000;
+			locate_for_mini(&x, &y, p1, p_all);
+			p_all->img.data[WINDOW_WID * y + x] = RED;
 		}
 		else
 			break;
-		ray_x += dx;
 		ray_y += dy;
+		ray_x += dx;
 	}
-}//좌표 2개를 받아서 선을 그려준다
-//도트 단위로 그려진다. 기울기는 항상 달라서 x좌표, y좌표 중 기준을 정해서 도트씩 그려야한다.
-//(기준이 되는 쪽의 미분값이 1.)
-//두 점의 x좌표와 y좌표 각각 차이를 긴쪽을 기준으로 하는게 광선을 좀 더 세밀하게 그릴수있다
-//while문을 통해서 벽을 만날때까지 빨간색으로 그려준다.
+}
 
-void draw_one_ray(t_all *p_all, double ang)
+void draw_one_ray(t_all *p_all, double ang, int i)
 {
 	t_temp_ray horz;
 	t_temp_ray vert;
@@ -204,28 +207,26 @@ void draw_one_ray(t_all *p_all, double ang)
 		p_all->ray.distance = horz.distance;
 		p_all->ray.vert_hit = false;
 	}
-	draw_line(p_all, p_all->player.x, p_all->player.y, p_all->ray.xhit_wall, p_all->ray.yhit_wall);
-}//수평으로 닿는 좌표와 수직으로 닿는 좌표를 모두 구한 뒤 if문으로 거리 비교해서 짧은쪽의 데이터를
-//ray 구조체에 저장해준다.
-//이렇게 저장한 값들을 draw_line()을 사용해서 최종적으로 한개의 광선을 그린다.
+	draw_line(p_all, p_all->ray.xhit_wall - p_all->player.x, p_all->ray.yhit_wall - p_all->player.y);
+	render_3d_wall(p_all, i);
+}
+//각각 광선에 대한 정보는 이 함수에 와서야 결정된다.
 
 void draw_ray(t_all *p_all)
 {
-	double angle;
-	double max_angle;
+	double	angle;
+	double	max_angle;
+	int		i;
 
-	angle = p_all->player.rotation_angle;
+	angle = p_all->player.rotation_angle - (RAY_RANGE / 2.0);
 	max_angle = p_all->player.rotation_angle + (RAY_RANGE / 2.0);
+	i = 0;
 
-	while (angle <= max_angle)
+	while (i < RAY_COUNT)
 	{
-		draw_one_ray(p_all, angle);
-		draw_one_ray(p_all, angle - (RAY_RANGE / 2.0));//min_angle
-		angle += (RAY_RANGE / 2.0) / ((RAY_COUNT - 1) / 2.0);
+		draw_one_ray(p_all, angle, i);
+		angle += RAY_RANGE / RAY_COUNT;
+		i++;
 	}
 }
-//player.rotation_angle 기준으로 양옆 RAY_RANGE/2 시야 범위
-//만든 while문은 항상 2개이상의 광선을 그리게함.
-//광선을 하나씩 그리도록 구현해도되지만, RAY_COUNT를 의도적으로 2개이상 지정해주는건
-//안어려워서 그냥 이렇게..
-//while문 한번이라도 적게 돌리는게 성능향상에 도움 될것같기도하대
+//원래 광선 동시에 2개 그렸는데, 왼쪽부터 하나씩 그려주는걸로 수정
