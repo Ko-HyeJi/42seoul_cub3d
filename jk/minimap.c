@@ -1,18 +1,19 @@
 #include "cub3d.h"
 
-// void locate_for_mini(int *xp, int *yp, int x, int y)
-void locate_for_mini(int *xp, int *yp, int x, int y, t_all *p_all)
+// void locate_for_mini(int *xp, int *yp, int x, int y, t_all *p_all)
+void locate_for_mini(int *xp, int *yp, t_point p, t_all *p_all)
 {
-	*xp = (int)((1 - MINI_SCALE) * p_all->map.col_tile_size * p_all->map.col + MINI_SCALE * x);
-	*yp = (int)((1 - MINI_SCALE) * p_all->map.row_tile_size * p_all->map.row + MINI_SCALE * y);
-}//미니맵 그릴때, player 그릴때
-
+	*xp = (int)((1 - MINI_SCALE) * p_all->map.col_tile_size * p_all->map.col + MINI_SCALE * p.x);
+	*yp = (int)((1 - MINI_SCALE) * p_all->map.row_tile_size * p_all->map.row + MINI_SCALE * p.y);
+}
 void fill_square(t_all *p_all, int x, int y, int color)
 {
 	int j;
 	int k;
+	t_point	p;
 
-	locate_for_mini(&x, &y, x, y, p_all);
+	set_point(&p, x, y);
+	locate_for_mini(&x, &y, p, p_all);
 	k = 0;
 	while (k < (int)(MINI_SCALE * p_all->map.row_tile_size))
 	{
@@ -28,11 +29,22 @@ void fill_square(t_all *p_all, int x, int y, int color)
 
 void render_map(t_all *p_all)
 {
-	p_all->img.data = (int *)mlx_get_data_addr(p_all->img.img, &(p_all->img.bpp), 
-										&(p_all->img.size_line), &(p_all->img.endian));
 	unsigned long long	j;
 	unsigned long long	k;
+	int	x;
+	int	y;
 
+	y = 0;
+	while (y < WINDOW_HEI)
+	{
+		x = 0;
+		while (x < WINDOW_WID)
+		{
+			p_all->img.data[WINDOW_WID * y + x] = PINK;
+			x++;
+		}
+		y++;
+	}
 	k = 0;
 	while (k < p_all->map.row)
 	{
