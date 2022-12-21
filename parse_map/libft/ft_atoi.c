@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 19:07:53 by hyko              #+#    #+#             */
-/*   Updated: 2022/01/17 02:15:36 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/21 18:17:47 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ int	ft_atoi(const char *str)
 			return (-1);
 		else if (result * sign < -2147483648)
 			return (0);
+		i++;
+	}
+	while (str[i])
+	{
+		if (!((9 <= str[i] && str[i] <= 13) || str[i] == 32 || str[i] == 0)) {
+			return (-1);
+		}
 		i++;
 	}
 	return (result * sign);

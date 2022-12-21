@@ -11,8 +11,8 @@ void	is_cub_file(const char* filename)
 
 static void	is_valid_texture(char* path, int type, t_all* all)
 {
-	int img_width = 50; //나중에 헤더에 정의
-	int img_height = 50;
+	int img_width = 64; //나중에 헤더에 정의
+	int img_height = 64;
 
 	int e_flag;
 	void* tmp;
@@ -37,18 +37,6 @@ static void	is_valid_texture(char* path, int type, t_all* all)
 
 	if (e_flag)
 		display_err_msg_and_exit("Duplicate Elements");
-}
-
-static int	is_digit_or_space(char* str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_strchr(" \n0123456789", str[i]))
-		i++;
-	if (i != (int)ft_strlen(str))
-		return (1);
-	return (0);
 }
 
 static void	free_double_pointer(char** arr)
@@ -84,11 +72,6 @@ static void	is_valid_color(char* color, int type, t_all* all)
 	i = 0;
 	while (i < 3)
 	{
-		if (is_digit_or_space(tmp[i]))
-		{
-			free_double_pointer(tmp);
-			display_err_msg_and_exit("Invalid color information");
-		}
 		rgb[i] = ft_atoi(tmp[i]);
 		if (rgb[i] < 0 || rgb[i] > 255)
 			display_err_msg_and_exit("Invalid color information");
