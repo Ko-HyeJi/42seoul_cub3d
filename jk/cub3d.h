@@ -117,7 +117,7 @@ typedef struct	s_all
 #define	BLUE 0x0000FF
 #define	WHITE 0xFFFFFF
 #define	GREY 0xAAAAAA
-#define	BLACK 0x000000
+#define	BLACK 0x000001 //초기화 값과 구분하기 위해 블루 한방울...(hyko)
 #define	PINK 0xFF00FF
 #define	RED 0xFF0000
 
@@ -173,6 +173,6 @@ void	init_mlx(t_all *p_all);
 void	init_key(t_all *p_all);
 void	ft_init(t_all *p_all);
 void	loop_hook(t_all *p_all);
-void	init_3d(t_all *p_all);
+void	init_img_data(t_all* p_all);
 
 #endif

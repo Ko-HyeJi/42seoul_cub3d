@@ -33,7 +33,7 @@ void render_map(t_all *p_all)
 	unsigned long long	k;
 	//미니맵과, 3d 동시에 그려주기.
 
-	init_3d(p_all);
+	init_img_data(p_all);
 	k = 0;
 	while (k < p_all->map.row)//미니맵 그리기
 	{

@@ -1,6 +1,7 @@
 #include "cub3d.h"
 
-void	init_3d(t_all *p_all)
+
+void init_img_data(t_all* p_all) 
 {
 	int	x;
 	int	y;
@@ -11,14 +12,12 @@ void	init_3d(t_all *p_all)
 		x = 0;
 		while (x < WINDOW_WID)
 		{
-			p_all->img.data[WINDOW_WID * y + x] = PINK;
+			p_all->img.data[WINDOW_WID * y + x] = 0;
 			x++;
 		}
 		y++;
 	}
 }
-//일단 핑크로 다 덮는다(3d 표현전 밑바탕).
-//(3d는 핑크색인곳만 그려줄거기 때문에)
 
 void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color)
 {
@@ -31,7 +30,7 @@ void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color)
 		x = 0;
 		while (x < WALL_STRIP_WIDTH)
 		{
-			if (p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)] == PINK)
+			if (!p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)])
 				p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)] = color;
 			x++;
 		}
@@ -50,7 +49,7 @@ void	draw_floor(t_all *p_all, int ray_num, int wall_bottom_pixel, int color)
 		x = 0;
 		while (x < WALL_STRIP_WIDTH)
 		{
-			if (p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)] == PINK)
+			if (!p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)])
 				p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)] = color;
 			x++;
 		}
@@ -98,7 +97,7 @@ void    render_3d_wall(t_all *p_all, int ray_num)
 		x = 0;
 		while (x < WALL_STRIP_WIDTH)
 		{
-			if (p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)] == PINK)
+			if (!p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)])
 				p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)] = color;
 				//현재위치픽셀 색이 초기설정색이면 색을 덧입히기
 			x++;
