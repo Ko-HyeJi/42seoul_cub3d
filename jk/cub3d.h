@@ -35,6 +35,7 @@ typedef struct	s_player
 	double rotation_angle;//바라보는각도. 시야각도
 	double walk_speed;//움직이는 속도
 	double turn_speed;//바라보는 각도의 조정속도
+	double updown_sight;//변수명 변경
 }				t_player;
 
 typedef struct	s_key
@@ -43,6 +44,9 @@ typedef struct	s_key
 	bool down;
 	bool left;
 	bool right;
+	bool right_rotation;
+	bool left_rotation;
+	int		updown_sight;//변수명 변경
 }				t_key;
 
 typedef struct	s_temp_ray
@@ -56,6 +60,8 @@ typedef struct	s_temp_ray
 	double	yhit_wall;
 	double	distance;
 }				t_temp_ray;//변수명 다시
+//일회용.
+//변수들은 광선 한개 그릴때만 유효함
 
 typedef struct	s_ray
 {
@@ -74,12 +80,18 @@ typedef struct	s_ray
 
 typedef struct	s_map
 {
-	unsigned long long	row;//ull..?
+	unsigned long long	row;//ull로 해도 되겠지..?
 	unsigned long long	col;
 	char				**dp_map;
 	unsigned long long	row_tile_size;
 	unsigned long long	col_tile_size;
 }				t_map;//필요시 minimap으로
+
+typedef struct	s_point
+{
+	double	x;
+	double	y;
+}				t_point;
 
 typedef struct	s_all
 {
@@ -91,7 +103,7 @@ typedef struct	s_all
 	t_map		map;
 }				t_all;
 
-#define MINI_SCALE 0.5
+#define MINI_SCALE 0.25
 #define TILE_SIZE 80
 
 #define WINDOW_WID 640
@@ -103,11 +115,24 @@ typedef struct	s_all
 
 #define PI     (3.14159265358979323846264338327950288)
 #define TWO_PI (6.28318530717958647692528676655900576)
-
+#define HALF_PI (1.57079632679489661923132169163975144)
 #define RAY_RANGE (PI / 3.0) // player 시야범위. 무난하게 60도
 #define RAY_COUNT 121 // 광선의 갯수. 2보다 커야하고 홀수 추천
 
 #define BUFFER_SIZE 333
+
+#define FOV_ANGLE 60 * (PI / 180.0)
+#define WALL_STRIP_WIDTH WINDOW_WID / RAY_COUNT
+#define	BLUE 0x0000FF
+#define	WHITE 0xFFFFFF
+#define	GREY 0xAAAAAA
+#define	BLACK 0x000000
+#define	PINK 0xFF00FF
+#define	RED 0xFF0000
+
+#define UPDOWN_SPEED 20
+#define SKY 0x66CCFF
+#define GROUND 0x66CC66
 
 int		key_press(int keycode, t_all *p_all);
 void	init_player(t_all *p_all);
@@ -126,8 +151,8 @@ double	distance_btw_points(double xa, double ya, double xb, double yb);
 void	calc_ray(t_all *p_all, t_temp_ray *hv);
 void	calc_horz_ray(t_all *p_all, t_temp_ray *p_horz);
 void	calc_vert_ray(t_all *p_all, t_temp_ray *p_vert);
-void	draw_line(t_all *p_all, double xa, double ya, double xb, double yb);
-void	draw_one_ray(t_all *p_all, double ang);
+void	draw_line(t_all *p_all, double dx, double dy);
+void	draw_one_ray(t_all *p_all, double ang, int i);
 void	draw_ray(t_all *p_all);
 double	normalize_angle(double ang);
 
@@ -144,7 +169,14 @@ char	*rtg(char *save);
 char	*read_and_save(int fd, char *save);
 char	*get_next_line(int fd);
 
-void	locate_for_mini(int *xp, int *yp, int x, int y, t_all *p_all);
+void	locate_for_mini(int *xp, int *yp, t_point p, t_all *p_all);
 void	init_map(char *argv, t_all *p_all);
+
+void    render_3d_wall(t_all *p_all, int ray_num);
+void	set_point(t_point *p_point, double x, double y);
+void    render_3d(t_all *p_all);
+
+void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color);
+void	draw_floor(t_all *p_all, int ray_num, int wall_bottom_pixel, int color);
 
 #endif

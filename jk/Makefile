@@ -11,7 +11,8 @@ SRC			=	main.c \
 				key.c \
 				map_parse.c \
 				get_next_line.c \
-				get_next_line_util.c
+				get_next_line_util.c \
+				3d_render.c
 				
 OBJ	=	$(SRC:.c=.o)
 MLX_FLAGS	=	-I. -L../mlx -lmlx -framework OpenGL -framework Appkit
