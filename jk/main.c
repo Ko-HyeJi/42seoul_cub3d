@@ -53,15 +53,10 @@ void	loop_hook(t_all *p_all)
 
 int main(int argc, char **argv)
 {
-	if (argc != 2)
-	{
-		printf("'2' arguments needed.\n");
-		return (0);
-	}//메시지, 반환값 수정!
 	t_all	s_all;
 
-	init_map(argv[1], &s_all);//필요시 argv[1] t_all에 넣기
 	ft_init(&s_all);
+	parse_map(argc, argv, &s_all);
 	loop_hook(&s_all);
 
 	return (0);
