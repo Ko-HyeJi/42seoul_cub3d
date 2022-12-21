@@ -28,7 +28,7 @@ void ray_init(t_ray *p_ray, double ang)
 	p_ray->ray_faces_up = !(p_ray->ray_faces_down);
 	p_ray->ray_faces_right = p_ray->ray_angle < 0.5 * PI || p_ray->ray_angle > 1.5 *  PI;
 	p_ray->ray_faces_left = !(p_ray->ray_faces_right);
-}//t_ray 구조체 초기화
+}
 
 void calc_distance(t_all *p_all, t_temp_ray *hv)
 {
@@ -36,10 +36,8 @@ void calc_distance(t_all *p_all, t_temp_ray *hv)
 		hv->distance = distance_btw_points(p_all->player.x, p_all->player.y
 										, hv->xhit_wall, hv->yhit_wall);
 	else
-		hv->distance = __DBL_MAX__;//써두되나...
+		hv->distance = __DBL_MAX__;
 }
-//벽 찾았으면 거리 계산함
-//못찾았으면 double 자료형 최대값 지정.(수평경계좌표와 수직경계좌표를 비교할때 항상 선택받지 못하도록 하기 위해) 
 
 double distance_btw_points(double xa, double ya, double xb, double yb)
 {
@@ -71,21 +69,19 @@ void calc_ray(t_all *p_all, t_temp_ray *hv)
 		}
 	}
 	calc_distance(p_all, hv);
-}//실질적으로 벽 위치 찾는다
-//calc_horz_ray(), calc_vert_ray()에서 intercept, step이 정해지고,
-//여기선 그 값들을 이용해서 계산한다
-//calc_distance()는 거리를 계산해준다
+}
+
 void calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
 {
 	p_horz->found_wallHit = false;
 	p_horz->xhit_wall = 0;
 	p_horz->yhit_wall = 0;
 
-	p_horz->yintercept = floor(p_all->player.y / p_all->map.row_tile_size) * p_all->map.row_tile_size;//
+	p_horz->yintercept = floor(p_all->player.y / p_all->map.row_tile_size) * p_all->map.row_tile_size;
 	if (p_all->ray.ray_faces_down)
 		p_horz->yintercept += p_all->map.row_tile_size;
 	else
-		p_horz->yintercept += 0;
+		;
 
 	p_horz->xintercept = p_all->player.x
 						+ (p_horz->yintercept - p_all->player.y) / tan(p_all->ray.ray_angle);
@@ -96,7 +92,7 @@ void calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
 	else
 		p_horz->ystep *= 1;
 
-	p_horz->xstep = p_all->map.col_tile_size / tan(p_all->ray.ray_angle);
+	p_horz->xstep = p_all->map.row_tile_size / tan(p_all->ray.ray_angle);
 	if (p_all->ray.ray_faces_left && p_horz->xstep > 0)
 		p_horz->xstep *= -1;
 	else
@@ -107,7 +103,7 @@ void calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
 		p_horz->xstep *= 1;
 	
 	calc_ray(p_all, p_horz);
-}//수평 계산
+}
 
 void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 {
@@ -119,7 +115,7 @@ void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 	if (p_all->ray.ray_faces_right)
 		p_vert->xintercept += p_all->map.col_tile_size;
 	else
-		p_vert->xintercept += 0;
+		;
 
 	p_vert->yintercept = p_all->player.y
 						+ (p_vert->xintercept - p_all->player.x) * tan(p_all->ray.ray_angle);
@@ -130,7 +126,7 @@ void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 	else
 		p_vert->xstep *= 1;
 
-	p_vert->ystep = p_all->map.row_tile_size * tan(p_all->ray.ray_angle);
+	p_vert->ystep = p_all->map.col_tile_size * tan(p_all->ray.ray_angle);
 	if (p_all->ray.ray_faces_up && p_vert->ystep > 0)
 		p_vert->ystep *= -1;
 	else
@@ -172,17 +168,17 @@ void draw_line(t_all *p_all, double dx, double dy)
 	{
 		set_point(&p1, ray_x, ray_y);
 		set_point(&p2, ray_x + dx, ray_y + dy);
-		if (!hit_wall(ray_x + dx, ray_y + dy, p_all))
+		if (!hit_wall(p2.x, p2.y, p_all))
 		{
 			locate_for_mini(&x, &y, p1, p_all);
 			p_all->img.data[WINDOW_WID * y + x] = RED;
 		}
 		else
 			break;
-		ray_y += dy;
 		ray_x += dx;
+		ray_y += dy;
 	}
-}
+}//여기랑 calc_ray 겹치는부분이 있는것같아서, 되면 합치는거어떨까?
 
 void draw_one_ray(t_all *p_all, double ang, int i)
 {
@@ -210,7 +206,6 @@ void draw_one_ray(t_all *p_all, double ang, int i)
 	draw_line(p_all, p_all->ray.xhit_wall - p_all->player.x, p_all->ray.yhit_wall - p_all->player.y);
 	render_3d_wall(p_all, i);
 }
-//각각 광선에 대한 정보는 이 함수에 와서야 결정된다.
 
 void draw_ray(t_all *p_all)
 {
@@ -218,15 +213,14 @@ void draw_ray(t_all *p_all)
 	double	max_angle;
 	int		i;
 
-	angle = p_all->player.rotation_angle - (RAY_RANGE / 2.0);
-	max_angle = p_all->player.rotation_angle + (RAY_RANGE / 2.0);
-	i = 0;
+	angle = p_all->player.rotation_angle - (FOV_ANGLE / 2.0);
+	max_angle = p_all->player.rotation_angle + (FOV_ANGLE / 2.0);
 
+	i = 0;
 	while (i < RAY_COUNT)
 	{
 		draw_one_ray(p_all, angle, i);
-		angle += RAY_RANGE / RAY_COUNT;
+		angle += FOV_ANGLE / RAY_COUNT;
 		i++;
 	}
 }
-//원래 광선 동시에 2개 그렸는데, 왼쪽부터 하나씩 그려주는걸로 수정

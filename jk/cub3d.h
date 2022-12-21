@@ -15,12 +15,6 @@
 #include <string.h>
 #include <unistd.h>
 
-typedef struct	s_mlx
-{
-	void	*mlx;
-	void	*win;
-}				t_mlx;
-
 typedef struct	s_img
 {
 	void	*img;
@@ -34,10 +28,10 @@ typedef struct	s_player
 {
 	double x;
 	double y;
-	double rotation_angle;//바라보는각도. 시야각도
-	double walk_speed;//움직이는 속도
-	double turn_speed;//바라보는 각도의 조정속도
-	double updown_sight;//변수명 변경
+	double rotation_angle;
+	double walk_speed;
+	double turn_speed;
+	double updown_sight;
 }				t_player;
 
 typedef struct	s_key
@@ -48,7 +42,7 @@ typedef struct	s_key
 	bool right;
 	bool right_rotation;
 	bool left_rotation;
-	int		updown_sight;//변수명 변경
+	int		updown_sight;
 }				t_key;
 
 typedef struct	s_temp_ray
@@ -61,9 +55,7 @@ typedef struct	s_temp_ray
 	double	xhit_wall;
 	double	yhit_wall;
 	double	distance;
-}				t_temp_ray;//변수명 다시
-//일회용.
-//변수들은 광선 한개 그릴때만 유효함
+}				t_temp_ray;
 
 typedef struct	s_ray
 {
@@ -76,9 +68,7 @@ typedef struct	s_ray
 	bool	ray_faces_up;
 	bool	ray_faces_right;
 	bool	ray_faces_left;
-}				t_ray;//변수명 다시
-//광선이 벽과 만나는 좌표와
-//광선의 방향적인 요소를 가지고있다
+}				t_ray;
 
 typedef struct	s_map
 {
@@ -121,17 +111,20 @@ typedef	enum	e_type
 
 typedef struct	s_all
 {
-	t_mlx		mlx;
 	t_img		img;
 	t_player	player;
 	t_key		key;
 	t_ray		ray;
 	t_map		map;
+<<<<<<< HEAD
 	t_map_info	map_info;
+=======
+	void		*mlx;
+	void		*win;
+>>>>>>> f993e28f07096fbc40e69ec85ebc737183d1b81e
 }				t_all;
 
 #define MINI_SCALE 0.25
-#define TILE_SIZE 80
 
 #define WINDOW_WID 640
 #define WINDOW_HEI 480
@@ -143,17 +136,18 @@ typedef struct	s_all
 #define PI     (3.14159265358979323846264338327950288)
 #define TWO_PI (6.28318530717958647692528676655900576)
 #define HALF_PI (1.57079632679489661923132169163975144)
-#define RAY_RANGE (PI / 3.0) // player 시야범위. 무난하게 60도
-#define RAY_COUNT 121 // 광선의 갯수. 2보다 커야하고 홀수 추천
+// #define RAY_COUNT 121
+#define RAY_COUNT WINDOW_WID
 
 // #define BUFFER_SIZE 333
 
 #define FOV_ANGLE 60 * (PI / 180.0)
-#define WALL_STRIP_WIDTH WINDOW_WID / RAY_COUNT
+// #define WALL_STRIP_WIDTH (WINDOW_WID / RAY_COUNT)
+#define WALL_STRIP_WIDTH 1
 #define	BLUE 0x0000FF
 #define	WHITE 0xFFFFFF
 #define	GREY 0xAAAAAA
-#define	BLACK 0x000000
+#define	BLACK 0x000001 //초기화 값과 구분하기 위해 블루 한방울...(hyko)
 #define	PINK 0xFF00FF
 #define	RED 0xFF0000
 
@@ -168,8 +162,7 @@ void	update_player(t_all *p_all);
 void	fill_square(t_all *p_all, int x, int y, int color);
 void	render_map(t_all *p_all);
 void	draw_player(t_all *p_all);
-int		ft_loop(t_all *p_all);//이름 수정할거임
-void	render_player(t_all *p_all);
+int		ft_loop(t_all *p_all);
 int		key_release(int keycode, t_all *p_all);
 
 void	ray_init(t_ray *p_ray, double ang);
@@ -206,9 +199,17 @@ void    render_3d(t_all *p_all);
 void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color);
 void	draw_floor(t_all *p_all, int ray_num, int wall_bottom_pixel, int color);
 
+<<<<<<< HEAD
 void	parse_map(int argc, char** argv, t_all* all);
 void	is_cub_file(const char* filename);
 void	check_type(char* line, t_all *all);
 void	display_err_msg_and_exit(const char* err_msg);
+=======
+void	init_mlx(t_all *p_all);
+void	init_key(t_all *p_all);
+void	ft_init(t_all *p_all);
+void	loop_hook(t_all *p_all);
+void	init_img_data(t_all* p_all);
+>>>>>>> f993e28f07096fbc40e69ec85ebc737183d1b81e
 
 #endif

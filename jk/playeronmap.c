@@ -4,7 +4,8 @@ void init_player(t_all *p_all)
 {
 	p_all->player.x = WINDOW_WID / 2;
 	p_all->player.y = WINDOW_HEI / 2;
-	p_all->player.rotation_angle = PI / 2;//?
+	p_all->player.rotation_angle = 0;// 오른쪽을 봄
+	// p_all->player.rotation_angle = PI / 2 + PI;// 삐딱한거 보정해야함. 어안보정 문제일수도..?
 	p_all->player.walk_speed = 1;
 	p_all->player.turn_speed = 2 * (PI / 180);//?
 	p_all->player.updown_sight = 0;
@@ -15,7 +16,7 @@ bool hit_wall(double x, double y, t_all *p_all)
 	int	ix;
 	int	iy;
 
-	if (x < 0 || x > WINDOW_WID || y < 0 || y > WINDOW_HEI)
+	if (x < 0 || x > WINDOW_WID || y < 0 || y > WINDOW_HEI)//포함시키는게 맞지않나..?
 	{
 		return (true);
 	}
@@ -80,9 +81,9 @@ void draw_player(t_all *p_all)
 	int		y;
 	t_point	p;
 
-	set_point(&p, p_all->player.x, p_all->player.y);
-	locate_for_mini(&x, &y, p, p_all);
-	update_player(p_all);
+	set_point(&p, p_all->player.x, p_all->player.y);//t_point구조체 값 대입
+	locate_for_mini(&x, &y, p, p_all);//화면 맨 오른쪽 맨 아래에 위치하게,
+	update_player(p_all);//있어야 더 스무스하게 움직임
 	int	row;
 	row = (-(MINI_SCALE * p_all->map.row_tile_size) / 10);
 	while (row <= (MINI_SCALE * p_all->map.row_tile_size / 10))
@@ -95,11 +96,6 @@ void draw_player(t_all *p_all)
 			col++;
 		}
 		row++;
-	}
-	draw_ray(p_all);
-}
-
-void render_player(t_all *p_all)
-{
-	draw_player(p_all);
+	}//플레이어그려주고
+	draw_ray(p_all);//있어야 광선 좀 풍부함
 }
