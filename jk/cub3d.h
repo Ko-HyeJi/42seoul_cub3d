@@ -3,6 +3,8 @@
 
 #include "../mlx/mlx.h"
 #include "key_macos.h"
+#include "../get_next_line/get_next_line.h"
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -93,6 +95,30 @@ typedef struct	s_point
 	double	y;
 }				t_point;
 
+typedef struct	s_map_info //map 구조체에 합칠지 고민중...(hyko)
+{
+	void*	no;
+	void*	so;
+	void*	we;
+	void*	ea;
+	int		f;
+	int		c;
+	char**	tile;
+	int		info_cnt;
+	int		tile_cnt;
+}				t_map_info;
+
+typedef	enum	e_type
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	F,
+	C,
+	TILE,
+}				t_type;
+
 typedef struct	s_all
 {
 	t_mlx		mlx;
@@ -101,6 +127,7 @@ typedef struct	s_all
 	t_key		key;
 	t_ray		ray;
 	t_map		map;
+	t_map_info	map_info;
 }				t_all;
 
 #define MINI_SCALE 0.25
@@ -119,7 +146,7 @@ typedef struct	s_all
 #define RAY_RANGE (PI / 3.0) // player 시야범위. 무난하게 60도
 #define RAY_COUNT 121 // 광선의 갯수. 2보다 커야하고 홀수 추천
 
-#define BUFFER_SIZE 333
+// #define BUFFER_SIZE 333
 
 #define FOV_ANGLE 60 * (PI / 180.0)
 #define WALL_STRIP_WIDTH WINDOW_WID / RAY_COUNT
@@ -178,5 +205,10 @@ void    render_3d(t_all *p_all);
 
 void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color);
 void	draw_floor(t_all *p_all, int ray_num, int wall_bottom_pixel, int color);
+
+void	parse_map(int argc, char** argv, t_all* all);
+void	is_cub_file(const char* filename);
+void	check_type(char* line, t_all *all);
+void	display_err_msg_and_exit(const char* err_msg);
 
 #endif

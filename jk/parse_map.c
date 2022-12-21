@@ -1,19 +1,19 @@
-#include "map.h"
+#include "cub3d.h"
 
-static void display_map_elements(t_all* all)
-{
-	printf("texture NO: %p\n", all->map_info.no);
-	printf("texture SO: %p\n", all->map_info.so);
-	printf("texture WE: %p\n", all->map_info.we);
-	printf("texture EA: %p\n", all->map_info.ea);
-	printf("\n");
-	printf("color F: %x\n", all->map_info.f);
-	printf("color C: %x\n", all->map_info.c);
-	printf("\n");
-	printf("map\n row:%llu col:%llu\n", all->map.row, all->map.col);
-	for (int i = 0; i < (int)all->map.row; i++)
-		printf("%s", all->map_info.tile[i]);
-}
+// static void display_map_elements(t_all* all)
+// {
+// 	printf("texture NO: %p\n", all->map_info.no);
+// 	printf("texture SO: %p\n", all->map_info.so);
+// 	printf("texture WE: %p\n", all->map_info.we);
+// 	printf("texture EA: %p\n", all->map_info.ea);
+// 	printf("\n");
+// 	printf("color F: %x\n", all->map_info.f);
+// 	printf("color C: %x\n", all->map_info.c);
+// 	printf("\n");
+// 	printf("map\n row:%llu col:%llu\n", all->map.row, all->map.col);
+// 	for (int i = 0; i < (int)all->map.row; i++)
+// 		printf("%s", all->map.dp_map[i]);
+// }
 
 void	display_err_msg_and_exit(const char* err_msg)
 {
@@ -60,7 +60,7 @@ static void	init_map_info(t_all* all)
 	all->map_info.ea = 0;
 	all->map_info.f = 0;
 	all->map_info.c = 0;
-	all->map_info.tile = (char**)malloc(sizeof(char*) * all->map.row);
+	all->map.dp_map = (char**)malloc(sizeof(char*) * all->map.row);
 	all->map_info.info_cnt = 0;
 	all->map_info.tile_cnt = 0;
 }
@@ -100,20 +100,16 @@ static void	is_vaild_map(char** map, int row)
 		display_err_msg_and_exit("Invalid Player");
 }
 
-int main(int argc, char** argv)
+void	parse_map(int argc, char** argv, t_all* all)
 {
 	int		fd;
 	char*	line;
-	t_all	all;
 
 	if (argc != 2)
 		display_err_msg_and_exit("Invalid argument");
 	is_cub_file(argv[1]);
-		
-	all.mlx.mlx = mlx_init(); //지우기!!
-	
-	get_row(argv[1], &all);
-	init_map_info(&all);
+	get_row(argv[1], all);
+	init_map_info(all);
 
 	fd = open(argv[1], O_RDONLY);
 	line = " ";
@@ -121,13 +117,13 @@ int main(int argc, char** argv)
 	{
 		line = get_next_line(fd);
 		if (line)
-			check_type(line, &all);
+			check_type(line, all);
 	}
 	free(line);
 	close(fd);
 
-	is_vaild_map(all.map_info.tile, all.map.row);
+	is_vaild_map(all->map.dp_map, all->map.row);
 
 	/* debug */
-	display_map_elements(&all);
+	// display_map_elements(all);
 }

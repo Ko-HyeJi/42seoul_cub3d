@@ -1,4 +1,4 @@
-#include "map.h"
+#include "cub3d.h"
 
 void	is_cub_file(const char* filename)
 {
@@ -97,7 +97,8 @@ static void	is_valid_tile(char* line, t_all* all)
 			display_err_msg_and_exit("Invalid map");
 		i++;
 	}
-	all->map_info.tile[all->map_info.tile_cnt] = line;
+	// all->map_info.tile[all->map_info.tile_cnt] = line;
+	all->map.dp_map[all->map_info.tile_cnt] = line;
 	if (all->map.col < (ft_strlen(line) - 1))
 		all->map.col = ft_strlen(line) - 1;
 	all->map_info.tile_cnt++;
@@ -112,7 +113,7 @@ void	check_type(char* line, t_all *all)
 		i++;
 	if (line[i] == '\n' && (all->map_info.tile_cnt == 0 || all->map_info.tile_cnt == (int)all->map.row))
 		return ;
-	else if (all->map_info.info_cnt < 6)
+	if (all->map_info.info_cnt < 6)
 	{
 		if (line[i] == 'N' && line[i + 1] == 'O')
 			is_valid_texture(line += 2, NO, all);
@@ -126,9 +127,12 @@ void	check_type(char* line, t_all *all)
 			is_valid_color(line += 1, F, all);
 		else if (line[i] == 'C')
 			is_valid_color(line += 1, C, all);
+		else
+			display_err_msg_and_exit("Invalid element in map file");		
 		all->map_info.info_cnt++;
+		return ;
 	}
-	else if (line[i] == '1')
+	if (all->map_info.info_cnt == 6 && line[i] == '1')
 		is_valid_tile(line, all);
 	else
 		display_err_msg_and_exit("Invalid element in map file");
