@@ -29,7 +29,7 @@ void get_row_col(char *argv, t_all *p_all)
 
 void	get_map(char *argv, t_all *p_all)
 {
-    get_row_col(argv, p_all);
+    get_row_col(argv, p_all);//맵의 행렬 크기 가져오고,
 	int	fd;
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
@@ -57,7 +57,7 @@ void	get_map(char *argv, t_all *p_all)
 
 void	init_map(char *argv, t_all *p_all)
 {
-	get_map(argv, p_all);
-	p_all->map.row_tile_size = WINDOW_HEI / p_all->map.row;
+	get_map(argv, p_all);//맵 이중포인터에 넣어주고,
+	p_all->map.row_tile_size = WINDOW_HEI / p_all->map.row;//타일 사이즈 설정해주고
 	p_all->map.col_tile_size = WINDOW_WID / p_all->map.col;
 }
