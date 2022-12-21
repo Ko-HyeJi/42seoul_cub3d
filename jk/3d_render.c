@@ -1,5 +1,25 @@
 #include "cub3d.h"
 
+void	init_3d(t_all *p_all)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < WINDOW_HEI)
+	{
+		x = 0;
+		while (x < WINDOW_WID)
+		{
+			p_all->img.data[WINDOW_WID * y + x] = PINK;
+			x++;
+		}
+		y++;
+	}
+}
+//일단 핑크로 다 덮는다(3d 표현전 밑바탕).
+//(3d는 핑크색인곳만 그려줄거기 때문에)
+
 void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color)
 {
 	int	x;
