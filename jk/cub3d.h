@@ -3,6 +3,7 @@
 
 #include "../mlx/mlx.h"
 #include "key_macos.h"
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -83,6 +84,30 @@ typedef struct	s_point
 	double	y;
 }				t_point;
 
+typedef struct	s_map_info //map 구조체에 합칠지 고민중...(hyko)
+{
+	void*	no;
+	void*	so;
+	void*	we;
+	void*	ea;
+	int		f;
+	int		c;
+	char**	tile;
+	int		info_cnt;
+	int		tile_cnt;
+}				t_map_info;
+
+typedef	enum	e_type
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	F,
+	C,
+	TILE,
+}				t_type;
+
 typedef struct	s_all
 {
 	t_img		img;
@@ -92,6 +117,7 @@ typedef struct	s_all
 	t_map		map;
 	void		*mlx;
 	void		*win;
+	t_map_info	map_info;
 }				t_all;
 
 #define MINI_SCALE 0.25
@@ -146,9 +172,6 @@ void	draw_one_ray(t_all *p_all, double ang, int i);
 void	draw_ray(t_all *p_all);
 double	normalize_angle(double ang);
 
-void	get_row_col(char *argv, t_all *p_all);
-void	get_map(char *argv, t_all *p_all);
-
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
@@ -160,7 +183,6 @@ char	*read_and_save(int fd, char *save);
 char	*get_next_line(int fd);
 
 void	locate_for_mini(int *xp, int *yp, t_point p, t_all *p_all);
-void	init_map(char *argv, t_all *p_all);
 
 void    render_3d_wall(t_all *p_all, int ray_num);
 void	set_point(t_point *p_point, double x, double y);
@@ -174,5 +196,10 @@ void	init_key(t_all *p_all);
 void	ft_init(t_all *p_all);
 void	loop_hook(t_all *p_all);
 void	init_img_data(t_all* p_all);
+
+void	parse_map(int argc, char** argv, t_all* all);
+void	is_cub_file(const char* filename);
+void	check_type(char* line, t_all *all);
+void	display_err_msg_and_exit(const char* err_msg);
 
 #endif
