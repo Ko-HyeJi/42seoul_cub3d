@@ -65,35 +65,36 @@ static void	init_map_info(t_all* all)
 	all->map_info.tile_cnt = 0;
 }
 
-static void	is_vaild_map(char** map, int row, t_all* all)
+static void	is_vaild_map(t_all* all)
 {
-	int	i;
-	int	j;
-	int	player;
+	unsigned long long	i;
+	unsigned long long	j;
+	unsigned long long	player;
 
 	i = 0;
 	j = 0;
 	player = 0;
-	while (i < row)
+	while (i < all->map.row)
 	{
 		j = 0;
-		while (map[i][j])
+		while (all->map.dp_map[i][j])
 		{
-			if (ft_strchr("NSEW", map[i][j])) {
-				printf("player: %f %f\n", all->player.x, all->player.y);
+			if (ft_strchr("NSEW", all->map.dp_map[i][j])) {
+				// printf("before player: %f %f\n", all->player.x, all->player.y);
 				all->player.x = (double)(WINDOW_WID / all->map.col) * ((double)(j) + 0.5);
 				all->player.y = (double)(WINDOW_HEI / all->map.row) * ((double)(i) + 0.5);
-				printf("player: %f %f\n", all->player.x, all->player.y);
+				// printf("after player: %f %f\n", all->player.x, all->player.y);
+								
 				player++;
 			}
-			if (!ft_strchr(" \t\n1", map[i][j]))
+			if (!ft_strchr(" \t\n1", all->map.dp_map[i][j]))
 			{
-				if (ft_strchr(" \t\n", map[i - 1][j])
-					|| ft_strchr(" \t\n", map[i + 1][j])
-					|| ft_strchr(" \t\n", map[i][j - 1])
-					|| ft_strchr(" \t\n", map[i][j + 1]))
+				if (ft_strchr(" \t\n", all->map.dp_map[i - 1][j])
+					|| ft_strchr(" \t\n", all->map.dp_map[i + 1][j])
+					|| ft_strchr(" \t\n", all->map.dp_map[i][j - 1])
+					|| ft_strchr(" \t\n", all->map.dp_map[i][j + 1]))
 				{
-					printf("[%d][%d]\n", i, j);	
+					printf("[%llu][%llu]\n", i, j);	
 					display_err_msg_and_exit("Invalid Map");
 				}
 			}
@@ -127,7 +128,7 @@ void	parse_map(int argc, char** argv, t_all* all)
 	free(line);
 	close(fd);
 
-	is_vaild_map(all->map.dp_map, all->map.row, all);
+	is_vaild_map(all);
 	
 	all->map.row_tile_size = WINDOW_HEI / all->map.row;//타일 사이즈 설정해주고
 	all->map.col_tile_size = WINDOW_WID / all->map.col;
