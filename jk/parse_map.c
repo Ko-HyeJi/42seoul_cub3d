@@ -65,6 +65,26 @@ static void	init_map_info(t_all* all)
 	all->map_info.tile_cnt = 0;
 }
 
+static void	set_player_location_and_direction(t_all* all, unsigned long long i, unsigned long long j)
+{
+	// printf("bf player location: %f %f\n", all->player.x, all->player.y);
+	all->player.x = (double)(WINDOW_WID / all->map.col) * ((double)(j) + 0.5);
+	all->player.y = (double)(WINDOW_HEI / all->map.row) * ((double)(i) + 0.5);
+	// printf("af player location: %f %f\n", all->player.x, all->player.y);
+	
+	// printf("bf player direction: %f\n", all->player.rotation_angle);
+	//각도 보정이 필요...
+	if (all->map.dp_map[i][j] == 'N')
+		all->player.rotation_angle = 270;
+	else if (all->map.dp_map[i][j] == 'S')
+		all->player.rotation_angle = 90;
+	else if (all->map.dp_map[i][j] == 'E')
+		all->player.rotation_angle = 0;
+	else if (all->map.dp_map[i][j] == 'W')
+		all->player.rotation_angle = 180;
+	// printf("af player direction: %f\n", all->player.rotation_angle);
+}
+
 static void	is_vaild_map(t_all* all)
 {
 	unsigned long long	i;
@@ -80,11 +100,7 @@ static void	is_vaild_map(t_all* all)
 		while (all->map.dp_map[i][j])
 		{
 			if (ft_strchr("NSEW", all->map.dp_map[i][j])) {
-				// printf("before player: %f %f\n", all->player.x, all->player.y);
-				all->player.x = (double)(WINDOW_WID / all->map.col) * ((double)(j) + 0.5);
-				all->player.y = (double)(WINDOW_HEI / all->map.row) * ((double)(i) + 0.5);
-				// printf("after player: %f %f\n", all->player.x, all->player.y);
-								
+				set_player_location_and_direction(all, i, j);
 				player++;
 			}
 			if (!ft_strchr(" \t\n1", all->map.dp_map[i][j]))
