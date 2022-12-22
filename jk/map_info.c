@@ -134,6 +134,8 @@ void	check_type(char* line, t_all *all)
 	}
 	if (all->map_info.info_cnt == 6 && line[i] == '1')
 		is_valid_tile(line, all);
+	else if (all->map_info.info_cnt == 6 && line[i] == '\0')
+		return ;
 	else
 		display_err_msg_and_exit("Invalid element in map file");
 }

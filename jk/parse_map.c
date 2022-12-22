@@ -90,6 +90,25 @@ static void	set_player_location_and_direction(t_all* all, unsigned long long i, 
 	// printf("af player direction: %f\n", all->player.rotation_angle);
 }
 
+static void	check_border(char** map, int row, int col)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if ((i == 0 || i == row - 1 || j == 0 || j == col - 1) && ft_strchr("0NSEW", map[i][j]))
+				display_err_msg_and_exit("Invalid Map");
+			j++;
+		}
+		i++;
+	}
+}
+
 static void	is_vaild_map(t_all* all)
 {
 	unsigned long long	i;
@@ -108,12 +127,13 @@ static void	is_vaild_map(t_all* all)
 				set_player_location_and_direction(all, i, j);
 				player++;
 			}
-			if (!ft_strchr(" \t\n1", all->map.dp_map[i][j]))
+			check_border(all->map.dp_map, all->map.row, all->map.col);
+			if (ft_strchr("0NSEW", all->map.dp_map[i][j]))
 			{
-				if (ft_strchr(" \t\n", all->map.dp_map[i - 1][j])
-					|| ft_strchr(" \t\n", all->map.dp_map[i + 1][j])
-					|| ft_strchr(" \t\n", all->map.dp_map[i][j - 1])
-					|| ft_strchr(" \t\n", all->map.dp_map[i][j + 1]))
+				if (ft_strchr(" \n", all->map.dp_map[i - 1][j])
+					|| ft_strchr(" \n", all->map.dp_map[i + 1][j])
+					|| ft_strchr(" \n", all->map.dp_map[i][j - 1])
+					|| ft_strchr(" \n", all->map.dp_map[i][j + 1]))
 				{
 					printf("[%llu][%llu]\n", i, j);	
 					display_err_msg_and_exit("Invalid Map");
@@ -178,8 +198,8 @@ void	parse_map(int argc, char** argv, t_all* all)
 	free(line);
 	close(fd);
 
-	is_vaild_map(all);
 	fill_map(all);
+	is_vaild_map(all);
 	
 	all->map.row_tile_size = WINDOW_HEI / all->map.row;//타일 사이즈 설정해주고
 	all->map.col_tile_size = WINDOW_WID / all->map.col;
