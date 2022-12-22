@@ -42,10 +42,13 @@ void render_map(t_all *p_all)
 		{
 			if (p_all->map.dp_map[k][j] == '1')
 				fill_square(p_all, (int)(p_all->map.col_tile_size * j), (int)(p_all->map.row_tile_size * k), BLACK);
-			else
+			else if (ft_strchr("0NSEW",p_all->map.dp_map[k][j]))
 				fill_square(p_all, (int)(p_all->map.col_tile_size * j), (int)(p_all->map.row_tile_size * k), WHITE);
+			else
+				;
 			j++;
 		}
 		k++;
 	}
 }
+
