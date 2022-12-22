@@ -74,8 +74,8 @@ typedef struct	s_map
 	unsigned long long	row;//ull로 해도 되겠지..?
 	unsigned long long	col;
 	char				**dp_map;
-	unsigned long long	row_tile_size;
-	unsigned long long	col_tile_size;
+	double	row_tile_size;
+	double	col_tile_size;
 }				t_map;//필요시 minimap으로
 
 typedef struct	s_point

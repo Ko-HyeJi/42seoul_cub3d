@@ -16,7 +16,7 @@ bool hit_wall(double x, double y, t_all *p_all)
 	int	ix;
 	int	iy;
 
-	if (x < 0 || x > WINDOW_WID || y < 0 || y > WINDOW_HEI)//포함시키는게 맞지않나..?
+	if (x < 0 || x >= WINDOW_WID || y < 0 || y >= WINDOW_HEI)//포함시키는게 맞지않나..?
 	{
 		return (true);
 	}
