@@ -11,8 +11,13 @@ static void display_map_elements(t_all* all)
 	printf("color C: %x\n", all->map_info.c);
 	printf("\n");
 	printf("map\n row:%llu col:%llu\n", all->map.row, all->map.col);
-	for (int i = 0; i < (int)all->map.row; i++)
-		printf("%s", all->map.dp_map[i]);
+	// for (int i = 0; i < (int)all->map.row; i++)
+	// 	printf("%s", all->map.dp_map[i]);
+	for (int i = 0; all->map.dp_map[i]; i++) {
+		for (int j = 0; all->map.dp_map[i][j]; j++)
+			printf("[%c] ", all->map.dp_map[i][j]);
+		printf("\n");
+	}
 }
 
 void	display_err_msg_and_exit(const char* err_msg)
@@ -60,7 +65,7 @@ static void	init_map_info(t_all* all)
 	all->map_info.ea = 0;
 	all->map_info.f = 0;
 	all->map_info.c = 0;
-	all->map.dp_map = (char**)malloc(sizeof(char*) * all->map.row);
+	all->map.dp_map = (char**)malloc(sizeof(char*) * (all->map.row + 1));
 	all->map_info.info_cnt = 0;
 	all->map_info.tile_cnt = 0;
 }
@@ -122,6 +127,35 @@ static void	is_vaild_map(t_all* all)
 		display_err_msg_and_exit("Invalid Player");
 }
 
+static void	fill_map(t_all* all)
+{
+	unsigned long long	i;
+	unsigned long long	j;
+	char* tmp;
+
+	i = 0;
+	while (i < all->map.row)
+	{
+		tmp = all->map.dp_map[i];
+		all->map.dp_map[i] = (char*)malloc(sizeof(char) * (all->map.col + 1));
+		j = 0;
+		while (tmp[j] != '\n')
+		{
+			all->map.dp_map[i][j] = tmp[j];
+			j++;
+		}
+		while (j < all->map.col)
+		{
+			all->map.dp_map[i][j] = ' ';
+			j++;
+		}
+		all->map.dp_map[i][j] = '\0';
+		free(tmp);
+		i++;
+	}
+	all->map.dp_map[all->map.row] = NULL;
+}
+
 void	parse_map(int argc, char** argv, t_all* all)
 {
 	int		fd;
@@ -145,6 +179,7 @@ void	parse_map(int argc, char** argv, t_all* all)
 	close(fd);
 
 	is_vaild_map(all);
+	fill_map(all);
 	
 	all->map.row_tile_size = WINDOW_HEI / all->map.row;//타일 사이즈 설정해주고
 	all->map.col_tile_size = WINDOW_WID / all->map.col;
