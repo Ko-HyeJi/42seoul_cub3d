@@ -148,8 +148,13 @@ typedef struct	s_all
 #define	RED 0xFF0000
 
 #define UPDOWN_SPEED 20
-#define SKY 0x66CCFF
-#define GROUND 0x66CC66
+// #define SKY 0x66CCFF
+// #define GROUND 0x66CC66
+
+#define COLOR_N RED
+#define COLOR_S BLUE
+#define COLOR_E	GREY
+#define COLOR_W PINK
 
 int		key_press(int keycode, t_all *p_all);
 void	init_player(t_all *p_all);
