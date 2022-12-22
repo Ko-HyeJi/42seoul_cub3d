@@ -1,5 +1,12 @@
+NO ../textures/barrel.xpm
+SO ../textures/barrel.xpm
+WE ../textures/barrel.xpm
+EA ../textures/barrel.xpm
+F 220,100,0
+C 225,30,0
+
 111111
 100001
-100001
+100N01
 100001
 111111
