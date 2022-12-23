@@ -44,7 +44,7 @@ double distance_btw_points(double xa, double ya, double xb, double yb)
 	return (sqrt((xa - xb) * (xa - xb) + (ya - yb) * (ya - yb)));
 }
 
-void calc_ray(t_all *p_all, t_temp_ray *hv)
+void calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b)
 {
 	double	xnext_touch;
 	double	ynext_touch;
@@ -55,7 +55,7 @@ void calc_ray(t_all *p_all, t_temp_ray *hv)
 	while (xnext_touch >= 0 && xnext_touch <= WINDOW_WID
 		&& ynext_touch >= 0 && ynext_touch <= WINDOW_HEI)
 	{
-		if (hit_wall(xnext_touch, ynext_touch - (p_all->ray.ray_faces_up), p_all))
+		if (hit_wall(xnext_touch - a, ynext_touch - b, p_all))
 		{
 			hv->found_wallHit = true;
 			hv->xhit_wall = xnext_touch;
@@ -102,7 +102,7 @@ void calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
 	else
 		p_horz->xstep *= 1;
 	
-	calc_ray(p_all, p_horz);
+	calc_ray(p_all, p_horz, 0, p_all->ray.ray_faces_up);
 }
 
 void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
@@ -136,7 +136,7 @@ void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 	else
 		p_vert->ystep *= 1;
 	
-	calc_ray(p_all, p_vert);
+	calc_ray(p_all, p_vert, p_all->ray.ray_faces_left, 0);
 }
 
 void set_point(t_point *p_point, double x, double y)
@@ -168,7 +168,7 @@ void draw_line(t_all *p_all, double dx, double dy)
 	{
 		set_point(&p1, ray_x, ray_y);
 		set_point(&p2, ray_x + dx, ray_y + dy);
-		if (!hit_wall(p2.x, p2.y, p_all))
+		if (!hit_wall(p2.x, p2.y, p_all) && !check_edge(p_all, p1, p2))
 		{
 			locate_for_mini(&x, &y, p1);
 			p_all->img.data[WINDOW_WID * y + x] = RED;
