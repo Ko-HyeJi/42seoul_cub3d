@@ -16,13 +16,13 @@ bool hit_wall(double x, double y, t_all *p_all)
 	int	ix;
 	int	iy;
 
-	if (x < 0 || x > WINDOW_WID || y < 0 || y > WINDOW_HEI)//포함시키는게 맞지않나..?
+	if (x < 0 || x >= WINDOW_WID || y < 0 || y >= WINDOW_HEI)//포함시키는게 맞지않나..?
 	{
 		return (true);
 	}
 	ix = floor(x / p_all->map.col_tile_size);
 	iy = floor(y / p_all->map.row_tile_size);
-	return (p_all->map.dp_map[iy][ix] != '0');
+	return (!(ft_strchr("0NSEW", p_all->map.dp_map[iy][ix]))); //player 좌표도 벽이 아닌걸로 처리해줘야함 (hyko)
 }
 
 void update_player(t_all *p_all)
@@ -82,7 +82,7 @@ void draw_player(t_all *p_all)
 	t_point	p;
 
 	set_point(&p, p_all->player.x, p_all->player.y);//t_point구조체 값 대입
-	locate_for_mini(&x, &y, p, p_all);//화면 맨 오른쪽 맨 아래에 위치하게,
+	locate_for_mini(&x, &y, p);//화면 맨 오른쪽 맨 아래에 위치하게,
 	update_player(p_all);//있어야 더 스무스하게 움직임
 	int	row;
 	row = (-(MINI_SCALE * p_all->map.row_tile_size) / 10);
