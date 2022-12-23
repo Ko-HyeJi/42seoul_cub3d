@@ -85,9 +85,19 @@ void    render_3d_wall(t_all *p_all, int ray_num)
 	
 	int color;
 	if (p_all->ray.vert_hit)
-		color = WHITE;
+	{
+		if (p_all->ray.ray_faces_right)
+			color = COLOR_E;
+		else
+			color = COLOR_W;
+	}
 	else
-		color = GREY;
+	{
+		if (p_all->ray.ray_faces_up)
+			color = COLOR_N;
+		else
+			color = COLOR_S;
+	}
 	
 	int x;
 	int y;
@@ -104,8 +114,8 @@ void    render_3d_wall(t_all *p_all, int ray_num)
 		}
 		y++;
 	}
-	draw_ceiling(p_all, ray_num, wall_top_pixel, SKY);
-	draw_floor(p_all, ray_num, wall_bottom_pixel, GROUND);
+	draw_ceiling(p_all, ray_num, wall_top_pixel, p_all->map_info.c);
+	draw_floor(p_all, ray_num, wall_bottom_pixel, p_all->map_info.f);
 }//ray_num의 순번을 잘 넘겨주기 위해 draw_ray() 수정함
 //화면~player 거리
 //y축 기준으로 wall_top_pixel~wall_bottom_pixel 그려줌.

@@ -11,8 +11,13 @@ static void display_map_elements(t_all* all)
 	printf("color C: %x\n", all->map_info.c);
 	printf("\n");
 	printf("map\n row:%llu col:%llu\n", all->map.row, all->map.col);
-	for (int i = 0; i < (int)all->map.row; i++)
-		printf("%s", all->map.dp_map[i]);
+	// for (int i = 0; i < (int)all->map.row; i++)
+	// 	printf("%s", all->map.dp_map[i]);
+	for (int i = 0; all->map.dp_map[i]; i++) {
+		for (int j = 0; all->map.dp_map[i][j]; j++)
+			printf("[%c] ", all->map.dp_map[i][j]);
+		printf("\n");
+	}
 }
 
 void	display_err_msg_and_exit(const char* err_msg)
@@ -60,35 +65,77 @@ static void	init_map_info(t_all* all)
 	all->map_info.ea = 0;
 	all->map_info.f = 0;
 	all->map_info.c = 0;
-	all->map.dp_map = (char**)malloc(sizeof(char*) * all->map.row);
+	all->map.dp_map = (char**)malloc(sizeof(char*) * (all->map.row + 1));
 	all->map_info.info_cnt = 0;
 	all->map_info.tile_cnt = 0;
 }
 
-static void	is_vaild_map(char** map, int row)
+static void	set_player_location_and_direction(t_all* all, unsigned long long i, unsigned long long j)
+{
+	// printf("bf player location: %f %f\n", all->player.x, all->player.y);
+	all->player.x = (double)(WINDOW_WID / all->map.col) * ((double)(j) + 0.5);
+	all->player.y = (double)(WINDOW_HEI / all->map.row) * ((double)(i) + 0.5);
+	// printf("af player location: %f %f\n", all->player.x, all->player.y);
+	
+	// printf("bf player direction: %f\n", all->player.rotation_angle);
+	//각도 보정이 필요...
+	if (all->map.dp_map[i][j] == 'N')
+		all->player.rotation_angle = 270;
+	else if (all->map.dp_map[i][j] == 'S')
+		all->player.rotation_angle = 90;
+	else if (all->map.dp_map[i][j] == 'E')
+		all->player.rotation_angle = 0;
+	else if (all->map.dp_map[i][j] == 'W')
+		all->player.rotation_angle = 180;
+	// printf("af player direction: %f\n", all->player.rotation_angle);
+}
+
+static void	check_border(char** map, int row, int col)
 {
 	int	i;
 	int	j;
-	int	player;
 
 	i = 0;
-	j = 0;
-	player = 0;
-	while (i < row)
+	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
-			if (ft_strchr("NSEW", map[i][j]))
+			if ((i == 0 || i == row - 1 || j == 0 || j == col - 1) && ft_strchr("0NSEW", map[i][j]))
+				display_err_msg_and_exit("Invalid Map");
+			j++;
+		}
+		i++;
+	}
+}
+
+static void	is_vaild_map(t_all* all)
+{
+	unsigned long long	i;
+	unsigned long long	j;
+	unsigned long long	player;
+
+	i = 0;
+	j = 0;
+	player = 0;
+	while (i < all->map.row)
+	{
+		j = 0;
+		while (all->map.dp_map[i][j])
+		{
+			if (ft_strchr("NSEW", all->map.dp_map[i][j])) {
+				set_player_location_and_direction(all, i, j);
 				player++;
-			if (!ft_strchr(" \t\n1", map[i][j]))
+			}
+			check_border(all->map.dp_map, all->map.row, all->map.col);
+			if (ft_strchr("0NSEW", all->map.dp_map[i][j]))
 			{
-				if (ft_strchr(" \t\n", map[i - 1][j])
-					|| ft_strchr(" \t\n", map[i + 1][j])
-					|| ft_strchr(" \t\n", map[i][j - 1])
-					|| ft_strchr(" \t\n", map[i][j + 1]))
+				if (ft_strchr(" \n", all->map.dp_map[i - 1][j])
+					|| ft_strchr(" \n", all->map.dp_map[i + 1][j])
+					|| ft_strchr(" \n", all->map.dp_map[i][j - 1])
+					|| ft_strchr(" \n", all->map.dp_map[i][j + 1]))
 				{
-					printf("[%d][%d]\n", i, j);	
+					printf("[%llu][%llu]\n", i, j);	
 					display_err_msg_and_exit("Invalid Map");
 				}
 			}
@@ -98,6 +145,35 @@ static void	is_vaild_map(char** map, int row)
 	}
 	if (player != 1)
 		display_err_msg_and_exit("Invalid Player");
+}
+
+static void	fill_map(t_all* all)
+{
+	unsigned long long	i;
+	unsigned long long	j;
+	char* tmp;
+
+	i = 0;
+	while (i < all->map.row)
+	{
+		tmp = all->map.dp_map[i];
+		all->map.dp_map[i] = (char*)malloc(sizeof(char) * (all->map.col + 1));
+		j = 0;
+		while (tmp[j] != '\n')
+		{
+			all->map.dp_map[i][j] = tmp[j];
+			j++;
+		}
+		while (j < all->map.col)
+		{
+			all->map.dp_map[i][j] = ' ';
+			j++;
+		}
+		all->map.dp_map[i][j] = '\0';
+		free(tmp);
+		i++;
+	}
+	all->map.dp_map[all->map.row] = NULL;
 }
 
 void	parse_map(int argc, char** argv, t_all* all)
@@ -122,10 +198,11 @@ void	parse_map(int argc, char** argv, t_all* all)
 	free(line);
 	close(fd);
 
-	is_vaild_map(all->map.dp_map, all->map.row);
+	fill_map(all);
+	is_vaild_map(all);
 	
-	all->map.row_tile_size = WINDOW_HEI / all->map.row;//타일 사이즈 설정해주고
-	all->map.col_tile_size = WINDOW_WID / all->map.col;
+	all->map.row_tile_size = WINDOW_HEI / (double)all->map.row;//타일 사이즈 설정해주고
+	all->map.col_tile_size = WINDOW_WID / (double)all->map.col;
 
 	/* debug */
 	display_map_elements(all);

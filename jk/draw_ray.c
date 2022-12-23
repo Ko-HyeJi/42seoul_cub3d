@@ -170,7 +170,7 @@ void draw_line(t_all *p_all, double dx, double dy)
 		set_point(&p2, ray_x + dx, ray_y + dy);
 		if (!hit_wall(p2.x, p2.y, p_all))
 		{
-			locate_for_mini(&x, &y, p1, p_all);
+			locate_for_mini(&x, &y, p1);
 			p_all->img.data[WINDOW_WID * y + x] = RED;
 		}
 		else

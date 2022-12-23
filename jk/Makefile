@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC 			=	cc
 CC_M1 			=	arch -x86_64 cc
-CCFLAGS		=	-Wall -Wextra -Werror
+CCFLAGS		=	-Wall -Wextra -Werror #-g3 -fsanitize=address
 
 SRC			=	main.c \
 				minimap.c \

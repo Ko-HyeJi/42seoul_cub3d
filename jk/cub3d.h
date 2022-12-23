@@ -74,8 +74,8 @@ typedef struct	s_map
 	unsigned long long	row;//ull로 해도 되겠지..?
 	unsigned long long	col;
 	char				**dp_map;
-	unsigned long long	row_tile_size;
-	unsigned long long	col_tile_size;
+	double	row_tile_size;
+	double	col_tile_size;
 }				t_map;//필요시 minimap으로
 
 typedef struct	s_point
@@ -148,8 +148,13 @@ typedef struct	s_all
 #define	RED 0xFF0000
 
 #define UPDOWN_SPEED 20
-#define SKY 0x66CCFF
-#define GROUND 0x66CC66
+// #define SKY 0x66CCFF
+// #define GROUND 0x66CC66
+
+#define COLOR_N RED
+#define COLOR_S BLUE
+#define COLOR_E	GREY
+#define COLOR_W PINK
 
 int		key_press(int keycode, t_all *p_all);
 void	init_player(t_all *p_all);
@@ -182,7 +187,7 @@ char	*rtg(char *save);
 char	*read_and_save(int fd, char *save);
 char	*get_next_line(int fd);
 
-void	locate_for_mini(int *xp, int *yp, t_point p, t_all *p_all);
+void	locate_for_mini(int *xp, int *yp, t_point p);
 
 void    render_3d_wall(t_all *p_all, int ray_num);
 void	set_point(t_point *p_point, double x, double y);
