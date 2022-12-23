@@ -82,7 +82,7 @@ void draw_player(t_all *p_all)
 	t_point	p;
 
 	set_point(&p, p_all->player.x, p_all->player.y);//t_point구조체 값 대입
-	locate_for_mini(&x, &y, p, p_all);//화면 맨 오른쪽 맨 아래에 위치하게,
+	locate_for_mini(&x, &y, p);//화면 맨 오른쪽 맨 아래에 위치하게,
 	update_player(p_all);//있어야 더 스무스하게 움직임
 	int	row;
 	row = (-(MINI_SCALE * p_all->map.row_tile_size) / 10);

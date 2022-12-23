@@ -187,7 +187,7 @@ char	*rtg(char *save);
 char	*read_and_save(int fd, char *save);
 char	*get_next_line(int fd);
 
-void	locate_for_mini(int *xp, int *yp, t_point p, t_all *p_all);
+void	locate_for_mini(int *xp, int *yp, t_point p);
 
 void    render_3d_wall(t_all *p_all, int ray_num);
 void	set_point(t_point *p_point, double x, double y);

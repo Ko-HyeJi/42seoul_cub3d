@@ -1,8 +1,7 @@
 #include "cub3d.h"
 
-void locate_for_mini(int *xp, int *yp, t_point p, t_all *p_all)
+void locate_for_mini(int *xp, int *yp, t_point p)
 {
-	(void)p_all; //이부분 나중에 수정
 	*xp = (int)(MINI_SCALE * p.x);
 	*yp = (int)(MINI_SCALE * p.y);
 }//미니맵 위치 좌상단으로 변경
@@ -14,7 +13,7 @@ void fill_square(t_all *p_all, int x, int y, int color)
 	t_point	p;
 
 	set_point(&p, x, y);
-	locate_for_mini(&x, &y, p, p_all);
+	locate_for_mini(&x, &y, p);
 	k = 0;
 	while (k <= (int)(MINI_SCALE * p_all->map.row_tile_size))
 	{
