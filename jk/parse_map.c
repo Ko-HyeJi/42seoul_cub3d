@@ -2,10 +2,10 @@
 
 static void display_map_elements(t_all* all)
 {
-	printf("texture NO: %p\n", all->map_info.no);
-	printf("texture SO: %p\n", all->map_info.so);
-	printf("texture WE: %p\n", all->map_info.we);
-	printf("texture EA: %p\n", all->map_info.ea);
+	printf("texture NO: %p\n", all->map_info.v_texture[0]);
+	printf("texture SO: %p\n", all->map_info.v_texture[1]);
+	printf("texture WE: %p\n", all->map_info.v_texture[2]);
+	printf("texture EA: %p\n", all->map_info.v_texture[3]);
 	printf("\n");
 	printf("color F: %x\n", all->map_info.f);
 	printf("color C: %x\n", all->map_info.c);
@@ -59,10 +59,10 @@ void	get_row(char* filename, t_all* all)
 
 static void	init_map_info(t_all* all)
 {
-	all->map_info.no = 0;
-	all->map_info.so = 0;
-	all->map_info.we = 0;
-	all->map_info.ea = 0;
+	all->map_info.v_texture[0] = 0;
+	all->map_info.v_texture[1] = 0;
+	all->map_info.v_texture[2] = 0;
+	all->map_info.v_texture[3] = 0;
 	all->map_info.f = 0;
 	all->map_info.c = 0;
 	all->map.dp_map = (char**)malloc(sizeof(char*) * (all->map.row + 1));

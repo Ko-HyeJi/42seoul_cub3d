@@ -7,6 +7,19 @@ int ft_loop(t_all *p_all)//이름 수정할거임
 	// render_player(p_all);
 	draw_player(p_all);
 	// draw_ray(p_all);여기에 없어도 될것같은딩..?
+
+	int row = 0;
+	while (row < TEXTURE_HEIGHT)
+	{
+		int col = 0;
+		while (col < TEXTURE_WIDTH)
+		{
+			p_all->img.data[(int)(WINDOW_WID) * row + col] = p_all->map_info.i_texture[0][TEXTURE_WIDTH * row + col];
+			col++;
+		}
+		row++;
+	}
+
 	mlx_put_image_to_window(p_all->mlx, p_all->win, p_all->img.img, 0, 0);
 	return (0);
 }
@@ -42,13 +55,14 @@ void	ft_init(t_all *p_all)
 void	loop_hook(t_all *p_all)
 {
 	mlx_hook(p_all->win, X_EVENT_KEY_PRESS, 0, &key_press, p_all);//키 누를때
-	//mlx상 모든 이벤트가 발생할때 hook 한다.
-	//키보드입력이나 마우스클릭을 프로그램에 도달하기전 가로채서 다른 역할하게끔한다.
+		//mlx상 모든 이벤트가 발생할때 hook 한다.
+		//키보드입력이나 마우스클릭을 프로그램에 도달하기전 가로채서 다른 역할하게끔한다.
 	mlx_hook(p_all->win, X_EVENT_KEY_RELEASE, 0, &key_release, p_all);//키 떼고있을때
 	mlx_loop_hook(p_all->mlx, &ft_loop, p_all);//ft_loop()를 계속 돌린다
-	//등록된 이벤트가 발생하지 않을 경우, 두번째 함수 호출함
+		//등록된 이벤트가 발생하지 않을 경우, 두번째 함수 호출함
+	// ft_loop(p_all);
 	mlx_loop(p_all->mlx);//이벤트를 받고, 이벤트를 관리함. 
-	//무한 루프를 돈다.
+		//무한 루프를 돈다.
 }
 
 int main(int argc, char **argv)
@@ -57,6 +71,7 @@ int main(int argc, char **argv)
 
 	ft_init(&s_all);
 	parse_map(argc, argv, &s_all);
+	set_texture_img(&s_all);
 	loop_hook(&s_all);
 
 	return (0);

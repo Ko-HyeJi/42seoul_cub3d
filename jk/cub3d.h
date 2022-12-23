@@ -86,10 +86,8 @@ typedef struct	s_point
 
 typedef struct	s_map_info //map 구조체에 합칠지 고민중...(hyko)
 {
-	void*	no;
-	void*	so;
-	void*	we;
-	void*	ea;
+	void	*v_texture[4];
+	int		*i_texture[4];
 	int		f;
 	int		c;
 	char**	tile;
@@ -156,6 +154,9 @@ typedef struct	s_all
 #define COLOR_E	GREY
 #define COLOR_W PINK
 
+#define TEXTURE_HEIGHT 64
+#define TEXTURE_WIDTH 64
+
 int		key_press(int keycode, t_all *p_all);
 void	init_player(t_all *p_all);
 bool	hit_wall(double x, double y, t_all *p_all);
@@ -206,5 +207,7 @@ void	parse_map(int argc, char** argv, t_all* all);
 void	is_cub_file(const char* filename);
 void	check_type(char* line, t_all *all);
 void	display_err_msg_and_exit(const char* err_msg);
+
+void	set_texture_img(t_all* all);
 
 #endif

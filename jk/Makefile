@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC 			=	cc
 CC_M1 			=	arch -x86_64 cc
-CCFLAGS		=	-Wall -Wextra -Werror #-g3 -fsanitize=address
+CCFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRC			=	main.c \
 				minimap.c \
@@ -13,7 +13,8 @@ SRC			=	main.c \
 				get_next_line_util.c \
 				3d_render.c \
 				parse_map.c \
-				map_info.c
+				map_info.c \
+				texture.c
 				
 OBJ	=	$(SRC:.c=.o)
 MLX_FLAGS	=	-I. -L../mlx -lmlx -framework OpenGL -framework Appkit
