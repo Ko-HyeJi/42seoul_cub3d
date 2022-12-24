@@ -7,19 +7,6 @@ int ft_loop(t_all *p_all)//이름 수정할거임
 	// render_player(p_all);
 	draw_player(p_all);
 	// draw_ray(p_all);여기에 없어도 될것같은딩..?
-
-	int row = 0;
-	while (row < TEXTURE_HEIGHT)
-	{
-		int col = 0;
-		while (col < TEXTURE_WIDTH)
-		{
-			p_all->img.data[(int)(WINDOW_WID) * row + col] = p_all->map_info.i_texture[0][TEXTURE_WIDTH * row + col];
-			col++;
-		}
-		row++;
-	}
-
 	mlx_put_image_to_window(p_all->mlx, p_all->win, p_all->img.img, 0, 0);
 	return (0);
 }
