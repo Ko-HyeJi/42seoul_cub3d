@@ -10,7 +10,7 @@ static void display_map_elements(t_all* all)
 	printf("color F: %x\n", all->map_info.f);
 	printf("color C: %x\n", all->map_info.c);
 	printf("\n");
-	printf("map\n row:%llu col:%llu\n", all->map.row, all->map.col);
+	printf("map: row:%llu col:%llu\n", all->map.row, all->map.col);
 	// for (int i = 0; i < (int)all->map.row; i++)
 	// 	printf("%s", all->map.dp_map[i]);
 	for (int i = 0; all->map.dp_map[i]; i++) {
