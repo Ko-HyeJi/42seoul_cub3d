@@ -13,29 +13,28 @@ typedef struct s_3d
 	int		width;
 }				t_3d;
 
-int	ternaries_func(int problem, int t, int f)
-{
-	if (problem == 1)
-		return (t);
-	return (f);
-}
-
 void	init_3D(t_all *all, t_3d *v)
 {
 	if (all->ray.distance == 0)
 		all->ray.distance = 0.1;
-	v->correct_distance = all->ray.distance
-		* cos(all->ray.ray_angle - all->player.rotation_angle);
+	
+	v->correct_distance = all->ray.distance	* cos(all->ray.ray_angle - all->player.rotation_angle);
 	v->distance_plane = (WINDOW_WID / 2) / tan(FOV_ANGLE / 2);
-	v->projected_height = (int)((all->map.col_tile_size / v->correct_distance)
-			* v->distance_plane);
-	v->top = (WINDOW_HEI / 2)
-		- (v->projected_height / 2) - all->player.updown_sight;
-	v->correct_top = ternaries_func(v->top < 0, 1, v->top);
-	v->bottom = (WINDOW_HEI / 2)
-		+ (v->projected_height / 2) - all->player.updown_sight;
-	v->correct_bottom = ternaries_func(v->bottom > WINDOW_HEI,
-			WINDOW_HEI, v->bottom);
+	v->projected_height = (int)((all->map.col_tile_size / v->correct_distance) * v->distance_plane);
+
+	v->top = (WINDOW_HEI / 2) - (v->projected_height / 2) - all->player.updown_sight;
+	v->bottom = (WINDOW_HEI / 2) + (v->projected_height / 2) - all->player.updown_sight;
+
+	if (v->top < 0)
+		v->correct_top = 1;
+	else
+		v->correct_top = v->top;
+
+	if (v->bottom > WINDOW_HEI)
+		v->correct_bottom = WINDOW_HEI;
+	else
+		v->correct_bottom = v->bottom;
+
 	v->height = v->bottom - v->top;
 }
 
