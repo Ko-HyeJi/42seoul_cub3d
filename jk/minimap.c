@@ -51,4 +51,3 @@ void render_map(t_all *p_all)
 		k++;
 	}
 }
-

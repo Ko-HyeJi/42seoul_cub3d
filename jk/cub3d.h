@@ -169,7 +169,8 @@ int		key_release(int keycode, t_all *p_all);
 void	ray_init(t_ray *p_ray, double ang);
 void	calc_distance(t_all *p_all, t_temp_ray *hv);
 double	distance_btw_points(double xa, double ya, double xb, double yb);
-void	calc_ray(t_all *p_all, t_temp_ray *hv);
+// void	calc_ray(t_all *p_all, t_temp_ray *hv);
+void	calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b);
 void	calc_horz_ray(t_all *p_all, t_temp_ray *p_horz);
 void	calc_vert_ray(t_all *p_all, t_temp_ray *p_vert);
 void	draw_line(t_all *p_all, double dx, double dy);
@@ -206,5 +207,7 @@ void	parse_map(int argc, char** argv, t_all* all);
 void	is_cub_file(const char* filename);
 void	check_type(char* line, t_all *all);
 void	display_err_msg_and_exit(const char* err_msg);
+
+bool	check_edge(t_all *p_all, t_point p1, t_point p2);
 
 #endif
