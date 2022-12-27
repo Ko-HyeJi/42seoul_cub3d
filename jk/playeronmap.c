@@ -11,6 +11,23 @@ void init_player(t_all *p_all)
 	p_all->player.updown_sight = 0;
 }
 
+bool	check_edge(t_all *p_all, t_point p1, t_point p2)
+{
+	int	dx;
+	int	dy;
+	int	a;
+	int	b;
+
+	dx = (int)(p1.x / p_all->map.col_tile_size) - (int)(p2.x / p_all->map.col_tile_size);
+	dy = (int)(p1.y / p_all->map.row_tile_size) - (int)(p2.y / p_all->map.row_tile_size);
+	a = (int)(p1.x / p_all->map.col_tile_size);
+	b = (int)(p1.y / p_all->map.row_tile_size);
+	if ((dx == 1 && dy == 1) || (dx == 1 && dy == -1) || (dx == -1 && dy == 1) || (dx == -1 && dy == -1))
+		return (!ft_strchr("0NSEW", p_all->map.dp_map[b - dy][a])
+			&& !ft_strchr("0NSEW", p_all->map.dp_map[b][a - dx]));
+	return (false);
+}
+
 bool hit_wall(double x, double y, t_all *p_all)
 {
 	int	ix;
@@ -20,8 +37,8 @@ bool hit_wall(double x, double y, t_all *p_all)
 	{
 		return (true);
 	}
-	ix = floor(x / p_all->map.col_tile_size);
-	iy = floor(y / p_all->map.row_tile_size);
+	ix = (int)floor(x / p_all->map.col_tile_size);
+	iy = (int)floor(y / p_all->map.row_tile_size);
 	return (!(ft_strchr("0NSEW", p_all->map.dp_map[iy][ix]))); //player 좌표도 벽이 아닌걸로 처리해줘야함 (hyko)
 }
 
@@ -32,6 +49,8 @@ void update_player(t_all *p_all)
 	double newPlayerX;
 	double newPlayerY;
 	double	move_side;
+	t_point	p1;
+	t_point	p2;
 
 	turnDirection = 0;
 	walkDirection = 0;
@@ -60,8 +79,9 @@ void update_player(t_all *p_all)
 	moveStep = walkDirection * p_all->player.walk_speed;
 	newPlayerX = p_all->player.x + moveStep * cos(p_all->player.rotation_angle - move_side);
 	newPlayerY = p_all->player.y + moveStep * sin(p_all->player.rotation_angle - move_side);
-
-	if (!hit_wall(newPlayerX, newPlayerY, p_all))
+	set_point(&p1, p_all->player.x, p_all->player.y);
+	set_point(&p2, newPlayerX, newPlayerY);
+	if (!hit_wall(newPlayerX, newPlayerY, p_all) && !check_edge(p_all, p1, p2))
 	{
 		p_all->player.x = newPlayerX;
 		p_all->player.y = newPlayerY;
