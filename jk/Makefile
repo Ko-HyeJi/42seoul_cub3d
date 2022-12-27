@@ -34,13 +34,9 @@ all	:	$(NAME)
 #	$(CC_M1) $(CCFLAGS) -c $< -o $@
 	
 $(NAME)	: $(OBJ)
-<<<<<<< HEAD
 #	make all -C $(LIBFT_PATH)
 #	make all -C $(MLX_PATH)
 	$(CC) $(CCFLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) $(OBJ) -o $(NAME)
-=======
-	$(CC) $(CCFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
->>>>>>> 946e6646c65ff42c105cb7e16a52f1c82c861345
 #	$(CC_M1) $(CCFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
 clean	:
