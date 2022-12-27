@@ -1,8 +1,8 @@
 NAME = cub3D
 
 CC 			=	cc
-CC_M1 			=	arch -x86_64 cc
-CCFLAGS		=	-Wall -Wextra -Werror #-g3 -fsanitize=address
+CC_M1 		=	arch -x86_64 cc
+CCFLAGS		=	-Wall -Wextra -Werror#-g3 -fsanitize=address
 
 SRC			=	main.c \
 				minimap.c \
@@ -16,7 +16,13 @@ SRC			=	main.c \
 				map_info.c
 				
 OBJ	=	$(SRC:.c=.o)
-MLX_FLAGS	=	-I. -L../mlx -lmlx -framework OpenGL -framework Appkit
+
+LIBFT_PATH = ../libft
+LIBFT_FLAGS = -I$(LIBFT_PATH) -L$(LIBFT_PATH)
+
+#I : 헤더파일 검색
+MLX_PATH = ../mlx
+MLX_FLAGS	=	-I$(MLX_PATH) -L$(MLX_PATH) -lmlx -framework OpenGL -framework Appkit
 
 # libft make 먼저 해야되는데 잘 안돼서 일단 수동으로 make 해주는중 수정 필수!!! (hyko) 
 # LIB = -L../libft -lft
@@ -24,22 +30,39 @@ MLX_FLAGS	=	-I. -L../mlx -lmlx -framework OpenGL -framework Appkit
 all	:	$(NAME)
 
 .c.o	:
-	 $(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@
 #	$(CC_M1) $(CCFLAGS) -c $< -o $@
-#  $(CC) $(CCFLAGS) $(MLX_FLAGS) -c $< -o $@
 	
 $(NAME)	: $(OBJ)
+<<<<<<< HEAD
+#	make all -C $(LIBFT_PATH)
+#	make all -C $(MLX_PATH)
+	$(CC) $(CCFLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) $(OBJ) -o $(NAME)
+=======
 	$(CC) $(CCFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
+>>>>>>> 946e6646c65ff42c105cb7e16a52f1c82c861345
 #	$(CC_M1) $(CCFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
 clean	:
+#	make clean -C $(LIBFT_PATH)
+#	make clean -C $(MLX_PATH)
 	$(RM) $(OBJ)
 
 fclean	: clean
+#	make fclean -C $(LIBFT_PATH)
 	$(RM) $(NAME)
 
 re	:	
 		make fclean 
 		make all
 
-.PHONY	:	all clean fclean re
+.PHONY	:	all clean fclean re#bonus 추가
+
+# ifdef	WITH_BONUS
+# 	OBJECTS	=	$(OBJS_B)
+# else
+# 	OBJECTS	=	$(OBJS)
+# endif
+
+# bonus	:
+# 	make WITH_BONUS=1 all
