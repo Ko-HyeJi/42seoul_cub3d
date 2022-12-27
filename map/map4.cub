@@ -1,12 +1,12 @@
-WE                    ../textures/barrel.xpm
-EA ../textures/barrel.xpm
+WE                    ../textures/colorstone.xpm
+EA ../textures/redbrick.xpm
 
 
 F   220     ,100      ,    0    
 C     225 ,30 ,   0
 
-NO ../textures/barrel.xpm
-SO ../textures/barrel.xpm
+NO ../textures/greystone.xpm
+SO ../textures/bluestone.xpm
 
 
         11111111111111111111111111

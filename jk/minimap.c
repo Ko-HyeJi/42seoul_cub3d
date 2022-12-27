@@ -1,5 +1,23 @@
 #include "cub3d.h"
 
+void init_img_data(t_all* p_all) 
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < WINDOW_HEI)
+	{
+		x = 0;
+		while (x < WINDOW_WID)
+		{
+			p_all->img.data[WINDOW_WID * y + x] = 0;
+			x++;
+		}
+		y++;
+	}
+}
+
 void locate_for_mini(int *xp, int *yp, t_point p)
 {
 	*xp = (int)(MINI_SCALE * p.x);

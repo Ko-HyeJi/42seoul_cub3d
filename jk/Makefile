@@ -12,8 +12,9 @@ SRC			=	main.c \
 				get_next_line.c \
 				get_next_line_util.c \
 				3d_render.c \
-				# parse_map.c \
-				map_info.c
+				parse_map.c \
+				map_info.c \
+				texture.c
 				
 OBJ	=	$(SRC:.c=.o)
 

@@ -26,15 +26,15 @@ static void	is_valid_texture(char* path, int type, t_all* all)
 		display_err_msg_and_exit("Invalid image file");
 
 	e_flag = 1;
-	if (type == NO && !all->map_info.no && e_flag--)
-		all->map_info.no = tmp;
-	else if (type == SO && !all->map_info.so && e_flag--)
-		all->map_info.so = tmp;
-	else if (type == WE && !all->map_info.we && e_flag--)
-		all->map_info.we = tmp;
-	else if (type == EA && !all->map_info.ea && e_flag--)
-		all->map_info.ea = tmp;
-
+	if (type == NO && !all->map_info.v_texture[NO] && e_flag--)
+		all->map_info.v_texture[NO] = tmp;
+	else if (type == SO && !all->map_info.v_texture[SO] && e_flag--)
+		all->map_info.v_texture[SO] = tmp;
+	else if (type == WE && !all->map_info.v_texture[WE] && e_flag--)
+		all->map_info.v_texture[WE] = tmp;
+	else if (type == EA && !all->map_info.v_texture[EA] && e_flag--)
+		all->map_info.v_texture[EA] = tmp;
+	
 	if (e_flag)
 		display_err_msg_and_exit("Duplicate Elements");
 }

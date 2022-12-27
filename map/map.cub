@@ -1,9 +1,9 @@
-NO ../textures/barrel.xpm
-SO ../textures/barrel.xpm
-WE ../textures/barrel.xpm
-EA ../textures/barrel.xpm
-F 220,100,0
-C 225,30,0
+NO ../textures/eagle.xpm
+SO ../textures/redbrick.xpm
+WE ../textures/greystone.xpm
+EA ../textures/bluestone.xpm
+F 50,50,50
+C 100,100,100
 
 111111111
 100000001

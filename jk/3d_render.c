@@ -1,21 +1,58 @@
 #include "cub3d.h"
 
-
-void init_img_data(t_all* p_all) 
+typedef struct s_3d
 {
-	int	x;
-	int	y;
+	double	correct_distance;
+	double	distance_plane;
+	int		projected_height;
+	int		top;
+	int		correct_top;
+	int		bottom;
+	int		correct_bottom;
+	int		height;
+	int		width;
+}				t_3d;
 
-	y = 0;
-	while (y < WINDOW_HEI)
+void	init_3D(t_all *all, t_3d *v)
+{
+	if (all->ray.distance == 0)
+		all->ray.distance = 0.1;
+	
+	v->correct_distance = all->ray.distance	* cos(all->ray.ray_angle - all->player.rotation_angle);
+	v->distance_plane = (WINDOW_WID / 2) / tan(FOV_ANGLE / 2);
+	v->projected_height = (int)((all->map.col_tile_size / v->correct_distance) * v->distance_plane);
+
+	v->top = (WINDOW_HEI / 2) - (v->projected_height / 2) - all->player.updown_sight;
+	v->bottom = (WINDOW_HEI / 2) + (v->projected_height / 2) - all->player.updown_sight;
+
+	if (v->top < 0)
+		v->correct_top = 1;
+	else
+		v->correct_top = v->top;
+
+	if (v->bottom > WINDOW_HEI)
+		v->correct_bottom = WINDOW_HEI;
+	else
+		v->correct_bottom = v->bottom;
+
+	v->height = v->bottom - v->top;
+}
+
+int	set_wall_direction(t_all* all)
+{
+	if (all->ray.vert_hit)
 	{
-		x = 0;
-		while (x < WINDOW_WID)
-		{
-			p_all->img.data[WINDOW_WID * y + x] = 0;
-			x++;
-		}
-		y++;
+		if (all->ray.ray_faces_right)
+			return (EA);
+		else
+			return (WE);
+	}
+	else
+	{
+		if (all->ray.ray_faces_up)
+			return (NO);
+		else
+			return (SO);
 	}
 }
 
@@ -57,65 +94,40 @@ void	draw_floor(t_all *p_all, int ray_num, int wall_bottom_pixel, int color)
 	}
 }
 
-void    render_3d_wall(t_all *p_all, int ray_num)
+int	set_wall_color(t_all *all, t_3d *v, int r)
 {
-	double	correct_distance;
-	double  distance_project_plane;
-	double  projected_wall_height;
+	int	col;
+	int	direction;
+	int	row;
 
-	correct_distance = p_all->ray.distance * cos(p_all->ray.ray_angle - p_all->player.rotation_angle);
-	distance_project_plane = (WINDOW_WID / 2) / tan(FOV_ANGLE / 2);
-	projected_wall_height = (p_all->map.row_tile_size / correct_distance) * distance_project_plane;//?
+	direction = set_wall_direction(all);
+	if (direction == WE || direction == EA)
+		col = ((int)all->ray.yhit_wall % (int)(all->map.col_tile_size)) * (TEXTURE_WIDTH / (int)(all->map.col_tile_size));
+	else
+		col = (int)all->ray.xhit_wall % (int)(all->map.col_tile_size) * (TEXTURE_WIDTH / (int)(all->map.col_tile_size));
+	row = (((v->correct_top - v->top + r) * TEXTURE_HEIGHT) / v->height);
 
-	int wall_strip_hei;
-	wall_strip_hei = (int)projected_wall_height;
+	return (all->map_info.i_texture[direction][(int)TEXTURE_WIDTH * row + col]);
+}
 
-	int wall_top_pixel;
-	wall_top_pixel = (WINDOW_HEI / 2) - (wall_strip_hei / 2) - p_all->player.updown_sight;
-	if (wall_top_pixel < 0)
-		wall_top_pixel = 0;
-	else
-		;
-	int wall_bottom_pixel;
-	wall_bottom_pixel = (WINDOW_HEI / 2) + (wall_strip_hei / 2) - p_all->player.updown_sight;//?
-	if (wall_bottom_pixel > WINDOW_HEI)
-		wall_bottom_pixel = WINDOW_HEI;
-	else
-		;
-	
-	int color;
-	if (p_all->ray.vert_hit)
+void	render_3d_wall(t_all* all, int i)
+{
+	t_3d	v;
+	int		r;
+	int		x;
+	int		y;
+
+	init_3D(all, &v);
+	r = 0;
+	y = v.correct_top - 1;
+	while (++y < v.correct_bottom)
 	{
-		if (p_all->ray.ray_faces_right)
-			color = COLOR_E;
-		else
-			color = COLOR_W;
+		x = -1;
+		while (++x < WALL_STRIP_WIDTH)
+			if (!all->img.data[WINDOW_WID * y + (x + i * WALL_STRIP_WIDTH)])
+				all->img.data[WINDOW_WID * y	+ (x + i * WALL_STRIP_WIDTH)] = set_wall_color(all, &v, r);
+		r++;
 	}
-	else
-	{
-		if (p_all->ray.ray_faces_up)
-			color = COLOR_N;
-		else
-			color = COLOR_S;
-	}
-	
-	int x;
-	int y;
-	y = wall_top_pixel;
-	while (y < wall_bottom_pixel)
-	{
-		x = 0;
-		while (x < WALL_STRIP_WIDTH)
-		{
-			if (!p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)])
-				p_all->img.data[WINDOW_WID * y + (x + ray_num * WALL_STRIP_WIDTH)] = color;
-				//현재위치픽셀 색이 초기설정색이면 색을 덧입히기
-			x++;
-		}
-		y++;
-	}
-	draw_ceiling(p_all, ray_num, wall_top_pixel, p_all->map_info.c);
-	draw_floor(p_all, ray_num, wall_bottom_pixel, p_all->map_info.f);
-}//ray_num의 순번을 잘 넘겨주기 위해 draw_ray() 수정함
-//화면~player 거리
-//y축 기준으로 wall_top_pixel~wall_bottom_pixel 그려줌.
+	draw_ceiling(all, i, v.correct_top, all->map_info.c);
+	draw_floor(all, i, v.correct_bottom, all->map_info.f);
+}
