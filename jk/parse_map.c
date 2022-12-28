@@ -55,8 +55,8 @@ void	get_row(char* filename, t_all* all)
 			if (map_flag && (tmp[i] == '1' || tmp[i] == '\n'))
 				all->map.row++;
 		}
-		free(tmp);
 	}
+	free(tmp);
 	close(fd);
 }
 

@@ -105,32 +105,35 @@ static void	is_valid_tile(char* line, t_all* all)
 
 void	check_type(char* line, t_all *all)
 {
-	while (*line == ' ')
-		line++;
-	if (line[0] == '\n' && (all->map_info.tile_cnt == 0 || all->map_info.tile_cnt == (int)all->map.row))
+	int	i;
+	
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == '\n' && (all->map_info.tile_cnt == 0 || all->map_info.tile_cnt == (int)all->map.row))
 		return ;
 	if (all->map_info.info_cnt < 6)
 	{
-		if (line[0] == 'N' && line[1] == 'O')
-			is_valid_texture(line += 2, NO, all);
-		else if (line[0] == 'S' && line[1] == 'O') 
-			is_valid_texture(line += 2, SO, all);
-		else if (line[0] == 'W' && line[1] == 'E')
-			is_valid_texture(line += 2, WE, all);
-		else if (line[0] == 'E' && line[1] == 'A')
-			is_valid_texture(line += 2, EA, all);
-		else if (line[0] == 'F')
-			is_valid_color(line += 1, F, all);
-		else if (line[0] == 'C')
-			is_valid_color(line += 1, C, all);
+		if (line[i] == 'N' && line[i + 1] == 'O')
+			is_valid_texture(line += (i + 2), NO, all);
+		else if (line[i] == 'S' && line[i + 1] == 'O') 
+			is_valid_texture(line += (i + 2), SO, all);
+		else if (line[i] == 'W' && line[i + 1] == 'E')
+			is_valid_texture(line += (i + 2), WE, all);
+		else if (line[i] == 'E' && line[i + 1] == 'A')
+			is_valid_texture(line += (i + 2), EA, all);
+		else if (line[i] == 'F')
+			is_valid_color(line += (i + 1), F, all);
+		else if (line[i] == 'C')
+			is_valid_color(line += (i + 1), C, all);
 		else
-			display_err_msg_and_exit("Invalid element in map file");		
+			display_err_msg_and_exit("Invalid element in map file1");		
 		all->map_info.info_cnt++;
 		return ;
 	}
-	if (all->map_info.info_cnt == 6 && (line[0] == '1' || line[0] == '\n'))
+	if (all->map_info.info_cnt == 6 && (line[i] == '1' || line[i] == '\n'))
 		is_valid_tile(line, all);
-	else if (all->map_info.info_cnt == 6 && line[0] == '\0')
+	else if (all->map_info.info_cnt == 6 && line[i] == '\0')
 		return ;
 	else
 		display_err_msg_and_exit("Invalid element in map file");
