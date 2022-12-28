@@ -125,13 +125,6 @@ int main(int argc, char **argv)
 	ft_init(&s_all);
 	parse_map(argc, argv, &s_all);
 	set_texture_img(&s_all);
-	for (unsigned long long i = 0; i < s_all.map.row; i++)
-	{
-		for (unsigned long long j = 0; j < s_all.map.col; j++)
-			printf("[%c] ", s_all.map.dp_map[i][j]);
-		printf("\n");
-	}
-	printf("row %llu col %llu\n", s_all.map.row, s_all.map.col);
 	loop_hook(&s_all);
 
 	return (0);

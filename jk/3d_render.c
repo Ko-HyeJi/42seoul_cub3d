@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+#define TILE_SIZE 32
+
 typedef struct s_3d
 {
 	double	correct_distance;
@@ -20,7 +22,7 @@ void	init_3D(t_all *all, t_3d *v)
 	
 	v->correct_distance = all->ray.distance	* cos(all->ray.ray_angle - all->player.rotation_angle);
 	v->distance_plane = (WINDOW_WID / 2) / tan(FOV_ANGLE / 2);
-	v->projected_height = (int)((all->map.col_tile_size / v->correct_distance) * v->distance_plane);
+	v->projected_height = (int)((TILE_SIZE / v->correct_distance) * v->distance_plane);
 
 	v->top = (WINDOW_HEI / 2) - (v->projected_height / 2) - all->player.updown_sight;
 	v->bottom = (WINDOW_HEI / 2) + (v->projected_height / 2) - all->player.updown_sight;
@@ -102,9 +104,9 @@ int	set_wall_color(t_all *all, t_3d *v, int r)
 
 	direction = set_wall_direction(all);
 	if (direction == WE || direction == EA)
-		col = ((int)all->ray.yhit_wall % (int)(all->map.col_tile_size)) * (TEXTURE_WIDTH / (int)(all->map.col_tile_size));
+		col = ((int)all->ray.yhit_wall % (int)(TILE_SIZE)) * (TEXTURE_WIDTH / (int)(TILE_SIZE));
 	else
-		col = (int)all->ray.xhit_wall % (int)(all->map.col_tile_size) * (TEXTURE_WIDTH / (int)(all->map.col_tile_size));
+		col = (int)all->ray.xhit_wall % (int)(TILE_SIZE) * (TEXTURE_WIDTH / (int)(TILE_SIZE));
 	row = (((v->correct_top - v->top + r) * TEXTURE_HEIGHT) / v->height);
 
 	return (all->map_info.i_texture[direction][(int)TEXTURE_WIDTH * row + col]);

@@ -39,6 +39,11 @@ bool hit_wall(double x, double y, t_all *p_all)
 	}
 	ix = (int)floor(x / p_all->map.col_tile_size);
 	iy = (int)floor(y / p_all->map.row_tile_size);
+	if (ix >= (int)p_all->map.col)
+		ix--;
+	if (iy >= (int)p_all->map.row)
+		iy--;
+	
 	return (!(ft_strchr("0NSEW", p_all->map.dp_map[iy][ix]))); //player 좌표도 벽이 아닌걸로 처리해줘야함 (hyko)
 }
 

@@ -36,7 +36,7 @@ all	:	$(NAME)
 	
 $(NAME)	: $(OBJ)
 	make all -C $(LIBFT_PATH)
-#	make all -C $(MLX_PATH)
+	make all -C $(MLX_PATH)
 	$(CC) $(CCFLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) $(OBJ) -o $(NAME)
 #	$(CC_M1) $(CCFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
