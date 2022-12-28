@@ -19,7 +19,7 @@ SRC			=	main.c \
 OBJ	=	$(SRC:.c=.o)
 
 LIBFT_PATH = ../libft
-LIBFT_FLAGS = -I$(LIBFT_PATH) -L$(LIBFT_PATH)
+LIBFT_FLAGS = -I$(LIBFT_PATH) -L$(LIBFT_PATH) -lft
 
 #I : 헤더파일 검색
 MLX_PATH = ../mlx
@@ -35,18 +35,18 @@ all	:	$(NAME)
 #	$(CC_M1) $(CCFLAGS) -c $< -o $@
 	
 $(NAME)	: $(OBJ)
-#	make all -C $(LIBFT_PATH)
+	make all -C $(LIBFT_PATH)
 #	make all -C $(MLX_PATH)
 	$(CC) $(CCFLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) $(OBJ) -o $(NAME)
 #	$(CC_M1) $(CCFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
 clean	:
-#	make clean -C $(LIBFT_PATH)
+	make clean -C $(LIBFT_PATH)
 #	make clean -C $(MLX_PATH)
 	$(RM) $(OBJ)
 
 fclean	: clean
-#	make fclean -C $(LIBFT_PATH)
+	make fclean -C $(LIBFT_PATH)
 	$(RM) $(NAME)
 
 re	:	
