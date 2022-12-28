@@ -33,10 +33,11 @@ void	get_row(char* filename, t_all* all)
 	char	*tmp;
 	int		fd;
 	int		i;
+	int		map_flag;
 
 	all->map.row = 0;
 	all->map.col = 0;
-	
+
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		display_err_msg_and_exit("Invalid File");
@@ -50,7 +51,9 @@ void	get_row(char* filename, t_all* all)
 			while (tmp[i] == ' ')
 				i++;
 			if (tmp[i] == '1')
-				all->map.row++; 
+				map_flag = 1;
+			if (map_flag && (tmp[i] == '1' || tmp[i] == '\n'))
+				all->map.row++;
 		}
 		free(tmp);
 	}
