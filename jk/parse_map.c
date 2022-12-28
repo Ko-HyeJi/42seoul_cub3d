@@ -201,8 +201,8 @@ void	parse_map(int argc, char** argv, t_all* all)
 	fill_map(all);
 	is_vaild_map(all);
 	
-	all->map.row_tile_size = WINDOW_HEI / (double)all->map.row;//타일 사이즈 설정해주고
-	all->map.col_tile_size = WINDOW_WID / (double)all->map.col;
+	all->map.row_tile_size = WINDOW_HEI / all->map.row;//타일 사이즈 설정해주고
+	all->map.col_tile_size = WINDOW_WID / all->map.col;
 
 	/* debug */
 	display_map_elements(all);
