@@ -17,7 +17,7 @@ static void	is_valid_texture(char* path, int type, t_all* all)
 	int e_flag;
 	void* tmp;
 
-	while(*path == ' ') //이거 메모리 누수 안나나?
+	while(*path == ' ')
 		path++;
 	if (path[ft_strlen(path) - 1] == '\n') //개행 지우기
 		path[ft_strlen(path) - 1] = '\0';
@@ -97,7 +97,6 @@ static void	is_valid_tile(char* line, t_all* all)
 			display_err_msg_and_exit("Invalid map");
 		i++;
 	}
-	// all->map_info.tile[all->map_info.tile_cnt] = line;
 	all->map.dp_map[all->map_info.tile_cnt] = line;
 	if (all->map.col < (ft_strlen(line) - 1))
 		all->map.col = ft_strlen(line) - 1;
@@ -106,35 +105,32 @@ static void	is_valid_tile(char* line, t_all* all)
 
 void	check_type(char* line, t_all *all)
 {
-	int i;
-
-	i = 0;
-	while (line[i] == ' ')
-		i++;
-	if (line[i] == '\n' && (all->map_info.tile_cnt == 0 || all->map_info.tile_cnt == (int)all->map.row))
+	while (*line == ' ')
+		line++;
+	if (line[0] == '\n' && (all->map_info.tile_cnt == 0 || all->map_info.tile_cnt == (int)all->map.row))
 		return ;
 	if (all->map_info.info_cnt < 6)
 	{
-		if (line[i] == 'N' && line[i + 1] == 'O')
+		if (line[0] == 'N' && line[1] == 'O')
 			is_valid_texture(line += 2, NO, all);
-		else if (line[i] == 'S' && line[i + 1] == 'O') 
+		else if (line[0] == 'S' && line[1] == 'O') 
 			is_valid_texture(line += 2, SO, all);
-		else if (line[i] == 'W' && line[i + 1] == 'E')
+		else if (line[0] == 'W' && line[1] == 'E')
 			is_valid_texture(line += 2, WE, all);
-		else if (line[i] == 'E' && line[i + 1] == 'A')
+		else if (line[0] == 'E' && line[1] == 'A')
 			is_valid_texture(line += 2, EA, all);
-		else if (line[i] == 'F')
+		else if (line[0] == 'F')
 			is_valid_color(line += 1, F, all);
-		else if (line[i] == 'C')
+		else if (line[0] == 'C')
 			is_valid_color(line += 1, C, all);
 		else
 			display_err_msg_and_exit("Invalid element in map file");		
 		all->map_info.info_cnt++;
 		return ;
 	}
-	if (all->map_info.info_cnt == 6 && line[i] == '1')
+	if (all->map_info.info_cnt == 6 && (line[0] == '1' || line[0] == '\n'))
 		is_valid_tile(line, all);
-	else if (all->map_info.info_cnt == 6 && line[i] == '\0')
+	else if (all->map_info.info_cnt == 6 && line[0] == '\0')
 		return ;
 	else
 		display_err_msg_and_exit("Invalid element in map file");
