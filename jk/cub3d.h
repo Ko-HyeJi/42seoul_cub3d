@@ -2,7 +2,7 @@
 #define CUB3D_H
 
 #include "../mlx/mlx.h"
-#include "key_macos.h"
+#include "keycode_mac.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -194,7 +194,6 @@ void	init_key(t_all *p_all);
 void	ft_init(t_all *p_all);
 void	loop_hook(t_all *p_all);
 void	init_img_data(t_all *p_all);
-void	init_map_info(t_all *p_all);
 
 void	parse_map(int argc, char** argv, t_all* all);
 void	is_cub_file(const char* filename);

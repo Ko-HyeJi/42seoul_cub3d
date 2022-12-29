@@ -17,7 +17,9 @@ SRC			=	main.c \
 				texture.c \
 				init.c \
 				init2.c \
-				calculate.c \
+				ray_calculation.c \
+				util.c \
+				ray_util.c \
 				loop_hook.c
 				
 OBJ	=	$(SRC:.c=.o)

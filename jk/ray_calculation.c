@@ -11,34 +11,7 @@ void calc_distance(t_all *p_all, t_temp_ray *hv)
 		hv->distance = distance_btw_points(p_all->player.x, p_all->player.y
 										, hv->xhit_wall, hv->yhit_wall);
 	else
-		hv->distance = __DBL_MAX__;
-}
-
-void calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b)
-{
-	double	xnext_touch;
-	double	ynext_touch;
-
-	xnext_touch = hv->xintercept;
-	ynext_touch = hv->yintercept;
-
-	while (xnext_touch >= 0 && xnext_touch <= WINDOW_WID
-		&& ynext_touch >= 0 && ynext_touch <= WINDOW_HEI)
-	{
-		if (hit_wall(xnext_touch - a, ynext_touch - b, p_all))
-		{
-			hv->found_wallHit = true;
-			hv->xhit_wall = xnext_touch;
-			hv->yhit_wall = ynext_touch;
-			break;
-		}
-		else
-		{
-			xnext_touch += hv->xstep;
-			ynext_touch += hv->ystep;
-		}
-	}
-	calc_distance(p_all, hv);
+		hv->distance = __DBL_MAX__;//사용가능한건지 확인
 }
 
 void calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
@@ -107,4 +80,31 @@ void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 		p_vert->ystep *= 1;
 	
 	calc_ray(p_all, p_vert, p_all->ray.ray_faces_left, 0);
+}
+
+void calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b)
+{
+	double	xnext_touch;
+	double	ynext_touch;
+
+	xnext_touch = hv->xintercept;
+	ynext_touch = hv->yintercept;
+
+	while (xnext_touch >= 0 && xnext_touch <= WINDOW_WID
+		&& ynext_touch >= 0 && ynext_touch <= WINDOW_HEI)
+	{
+		if (hit_wall(xnext_touch - a, ynext_touch - b, p_all))
+		{
+			hv->found_wallHit = true;
+			hv->xhit_wall = xnext_touch;
+			hv->yhit_wall = ynext_touch;
+			break;
+		}
+		else
+		{
+			xnext_touch += hv->xstep;
+			ynext_touch += hv->ystep;
+		}
+	}
+	calc_distance(p_all, hv);
 }

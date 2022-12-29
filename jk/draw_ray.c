@@ -1,27 +1,6 @@
 #include "cub3d.h"
 
-void set_point(t_point *p_point, double x, double y)
-{
-	p_point->x = x;
-	p_point->y = y;
-}
-
-double normalize_fisheye(double ang)
-{
-	if (ang >= 0)
-	{
-		while (ang >= TWO_PI)
-			ang -= TWO_PI;
-	}
-	else
-	{
-		while (ang <= 0)
-			ang += TWO_PI;
-	}
-	return ang;
-}
-
-void draw_line(t_all *p_all, double dx, double dy)
+void	draw_line(t_all *p_all, double dx, double dy)
 {
 	double	ray_x;
 	double	ray_y;
@@ -50,21 +29,20 @@ void draw_line(t_all *p_all, double dx, double dy)
 			p_all->img.data[WINDOW_WID * y + x] = RED;
 		}
 		else
-			break;
+			break ;
 		ray_x += dx;
 		ray_y += dy;
 	}
-}//여기랑 calc_ray 겹치는부분이 있는것같아서, 되면 합치는거어떨까?
+}
 
-void draw_one_ray(t_all *p_all, double ang, int i)
+void	draw_one_ray(t_all *p_all, double ang, int i)
 {
-	t_temp_ray horz;
-	t_temp_ray vert;
+	t_temp_ray	horz;
+	t_temp_ray	vert;
 
 	ray_init(&(p_all->ray), ang);
 	calc_horz_ray(p_all, &horz);
 	calc_vert_ray(p_all, &vert);
-
 	if (vert.distance < horz.distance)
 	{
 		p_all->ray.xhit_wall = vert.xhit_wall;
@@ -83,7 +61,7 @@ void draw_one_ray(t_all *p_all, double ang, int i)
 	render_3d_wall(p_all, i);
 }
 
-void draw_ray(t_all *p_all)
+void	draw_ray(t_all *p_all)
 {
 	double	angle;
 	double	max_angle;
@@ -91,7 +69,6 @@ void draw_ray(t_all *p_all)
 
 	angle = p_all->player.rotation_angle - (FOV_ANGLE / 2.0);
 	max_angle = p_all->player.rotation_angle + (FOV_ANGLE / 2.0);
-
 	i = 0;
 	while (i < RAY_COUNT)
 	{
