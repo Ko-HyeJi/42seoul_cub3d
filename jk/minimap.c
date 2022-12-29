@@ -38,7 +38,7 @@ void	render_map(t_all *p_all)
 					(int)(p_all->map.col_tile_size * j),
 					(int)(p_all->map.row_tile_size * k),
 					BLACK);
-			else if (ft_strchr("0NSEW",p_all->map.dp_map[k][j]))
+			else if (ft_strchr("0NSEW", p_all->map.dp_map[k][j]))
 				fill_square(p_all,
 					(int)(p_all->map.col_tile_size * j),
 					(int)(p_all->map.row_tile_size * k),
