@@ -14,7 +14,7 @@ void	fill_square(t_all *p_all, int x, int y, int color)
 		j = 0;
 		while (j <= (int)(MINI_SCALE * p_all->map.col_tile_size))
 		{
-			p_all->img.data[(int)(WINDOW_WID) * (y + k) + (x + j)] = color;
+			p_all->img.data[(int)(WINDOW_WID) *(y + k) + (x + j)] = color;
 			j++;
 		}
 		k++;
@@ -36,15 +36,11 @@ void	render_map(t_all *p_all)
 			if (p_all->map.dp_map[k][j] == '1')
 				fill_square(p_all,
 					(int)(p_all->map.col_tile_size * j),
-					(int)(p_all->map.row_tile_size * k),
-					BLACK);
+					(int)(p_all->map.row_tile_size * k), BLACK);
 			else if (ft_strchr("0NSEW", p_all->map.dp_map[k][j]))
 				fill_square(p_all,
 					(int)(p_all->map.col_tile_size * j),
-					(int)(p_all->map.row_tile_size * k),
-					WHITE);
-			else
-				;
+					(int)(p_all->map.row_tile_size * k), WHITE);
 			j++;
 		}
 		k++;
