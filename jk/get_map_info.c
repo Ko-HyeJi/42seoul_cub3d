@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:36:53 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 20:53:42 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/29 22:31:06 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,16 @@ void	get_map_info(char *line, t_all *p_all)
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	if (line[i] == '\n' && (p_all->map_info.tile_cnt == 0
-			|| p_all->map_info.tile_cnt == (int)p_all->map.row))
+	if (line[i] == '\n' && (p_all->map_info.tile_cnt == 0 || p_all->map_info.tile_cnt == (int)p_all->map.row))
+	{
+		free(line);
 		return ;
+	}
 	if (p_all->map_info.info_cnt < 6)
 	{
 		check_type(line, p_all, i);
 		p_all->map_info.info_cnt++;
+		free(line);
 		return ;
 	}
 	if (p_all->map_info.info_cnt == 6 && (line[i] == '1' || line[i] == '\n'))

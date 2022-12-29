@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:20:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 21:00:52 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/29 22:34:02 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static void	get_row(char *filename, t_all *p_all)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		display_err_msg_and_exit("Invalid File");
-	tmp = " ";
-	while (tmp)
+	while (1)
 	{
 		i = 0;
 		tmp = get_next_line(fd);
@@ -54,7 +53,10 @@ static void	get_row(char *filename, t_all *p_all)
 				map_flag = 1;
 			if (map_flag && (tmp[i] == '1' || tmp[i] == '\n'))
 				p_all->map.row++;
+			free(tmp);
 		}
+		else
+			break ;
 	}
 	free(tmp);
 	close(fd);
@@ -100,12 +102,13 @@ void	parse_map(int argc, char **argv, t_all *p_all)
 	get_row(argv[1], p_all);
 	init_map_info(p_all);
 	fd = open(argv[1], O_RDONLY);
-	line = " ";
-	while (line)
+	while (1)
 	{
 		line = get_next_line(fd);
 		if (line)
 			get_map_info(line, p_all);
+		else
+			break ;
 	}
 	free(line);
 	close(fd);

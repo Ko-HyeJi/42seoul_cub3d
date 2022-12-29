@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC 			=	cc
-CCFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
+CCFLAGS		=	-Wall -Wextra -Werror #-g3 -fsanitize=address
 
 SRC			=	main.c \
 				minimap.c \
