@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 18:58:22 by hyko              #+#    #+#              #
-#    Updated: 2022/01/18 00:16:54 by hyko             ###   ########.fr        #
+#    Updated: 2022/12/29 14:43:32 by jeekim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = gcc
+CC = cc
 CFLAG = -Wall -Wextra -Werror
 
 RM = rm -rf

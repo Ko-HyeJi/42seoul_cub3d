@@ -30,7 +30,6 @@ typedef struct	s_player
 	double rotation_angle;
 	double walk_speed;
 	double turn_speed;
-	double updown_sight;
 }				t_player;
 
 typedef struct	s_key
@@ -41,7 +40,6 @@ typedef struct	s_key
 	bool right;
 	bool right_rotation;
 	bool left_rotation;
-	int		updown_sight;
 }				t_key;
 
 typedef struct	s_temp_ray
@@ -125,7 +123,7 @@ typedef struct	s_all
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_RELEASE 3
-// # define X_EVENT_WINDOW_DESTROY 17
+# define X_EVENT_WINDOW_DESTROY 17
 
 #define PI     (3.14159265358979323846264338327950288)
 #define TWO_PI (6.28318530717958647692528676655900576)
@@ -145,7 +143,6 @@ typedef struct	s_all
 #define	PINK 0xFF00FF
 #define	RED 0xFF0000
 
-#define UPDOWN_SPEED 20
 // #define SKY 0x66CCFF
 // #define GROUND 0x66CC66
 

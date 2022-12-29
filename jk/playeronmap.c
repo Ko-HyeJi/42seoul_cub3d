@@ -8,7 +8,6 @@ void init_player(t_all *p_all)
 	// p_all->player.rotation_angle = PI / 2 + PI;// 삐딱한거 보정해야함. 어안보정 문제일수도..?
 	p_all->player.walk_speed = 1;
 	p_all->player.turn_speed = 2 * (PI / 180);//?
-	p_all->player.updown_sight = 0;
 }
 
 bool	check_edge(t_all *p_all, t_point p1, t_point p2)
@@ -91,13 +90,6 @@ void update_player(t_all *p_all)
 		p_all->player.x = newPlayerX;
 		p_all->player.y = newPlayerY;
 	}
-
-	p_all->player.updown_sight += UPDOWN_SPEED * p_all->key.updown_sight;
-	if (p_all->player.updown_sight > WINDOW_HEI / 4)//
-		p_all->player.updown_sight = WINDOW_HEI / 4;
-	if (p_all->player.updown_sight < - WINDOW_HEI / 4)
-		p_all->player.updown_sight = - WINDOW_HEI / 4;
-	
 }
 
 void draw_player(t_all *p_all)

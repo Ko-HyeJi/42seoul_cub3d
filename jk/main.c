@@ -29,7 +29,6 @@ void	init_key(t_all *p_all)
 	p_all->key.right = false;
 	p_all->key.left_rotation = false;
 	p_all->key.right_rotation = false;
-	p_all->key.updown_sight = false;
 }
 
 void	ft_init(t_all *p_all)
@@ -39,12 +38,18 @@ void	ft_init(t_all *p_all)
 	init_mlx(p_all);//mlx 사용하기 위한 초기 세팅해주고 
 }
 
+int	mouse(void)
+{
+	exit(0);
+}
+
 void	loop_hook(t_all *p_all)
 {
 	mlx_hook(p_all->win, X_EVENT_KEY_PRESS, 0, &key_press, p_all);//키 누를때
 		//mlx상 모든 이벤트가 발생할때 hook 한다.
 		//키보드입력이나 마우스클릭을 프로그램에 도달하기전 가로채서 다른 역할하게끔한다.
 	mlx_hook(p_all->win, X_EVENT_KEY_RELEASE, 0, &key_release, p_all);//키 떼고있을때
+	mlx_hook(p_all->win, X_EVENT_WINDOW_DESTROY, 0, &mouse, 0);//키 떼고있을때
 	mlx_loop_hook(p_all->mlx, &ft_loop, p_all);//ft_loop()를 계속 돌린다
 		//등록된 이벤트가 발생하지 않을 경우, 두번째 함수 호출함
 	// ft_loop(p_all);
@@ -52,15 +57,40 @@ void	loop_hook(t_all *p_all)
 		//무한 루프를 돈다.
 }
 
+int ft_loop2(t_all *p_all)//이름 수정할거임
+{
+	mlx_put_image_to_window(p_all->mlx, p_all->win, p_all->img.img, 0, 0);
+	return (0);
+}
+
+void	loop_hook2(t_all *p_all)
+{
+	mlx_hook(p_all->win, X_EVENT_KEY_PRESS, 0, &key_press, p_all);//키 누를때
+		//mlx상 모든 이벤트가 발생할때 hook 한다.
+		//키보드입력이나 마우스클릭을 프로그램에 도달하기전 가로채서 다른 역할하게끔한다.
+	mlx_hook(p_all->win, X_EVENT_KEY_RELEASE, 0, &key_release, p_all);//키 떼고있을때
+	// mlx_loop_hook(p_all->mlx, &ft_loop2, p_all);//ft_loop()를 계속 돌린다
+		//등록된 이벤트가 발생하지 않을 경우, 두번째 함수 호출함
+	// ft_loop(p_all);
+	mlx_loop(p_all->mlx);//이벤트를 받고, 이벤트를 관리함. 
+		//무한 루프를 돈다.
+}
+
+int	color(t_img *p_img, int row, int col)
+{
+	int	fixed_row = 64 * row / WINDOW_HEI;
+	int	fixed_col = 64 * col / WINDOW_WID;
+
+	return (p_img->data[64 * fixed_row + fixed_col]);
+}
+
 int main(int argc, char **argv)
 {
 	t_all	s_all;
 
-	(void)argc;
 	ft_init(&s_all);
 	parse_map(argc, argv, &s_all);
 	set_texture_img(&s_all);
 	loop_hook(&s_all);
-
 	return (0);
 }
