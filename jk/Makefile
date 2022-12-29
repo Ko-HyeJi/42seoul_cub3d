@@ -20,7 +20,8 @@ SRC			=	main.c \
 				ray_calculation.c \
 				util.c \
 				ray_util.c \
-				loop_hook.c
+				loop_hook.c \
+				check_map.c
 				
 OBJ	=	$(SRC:.c=.o)
 

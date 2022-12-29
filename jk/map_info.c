@@ -1,15 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_info.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/29 17:36:53 by hyko              #+#    #+#             */
+/*   Updated: 2022/12/29 18:33:00 by hyko             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	is_cub_file(const char* filename)
-{
-	size_t len = ft_strlen(filename);
-	if (len < 5)
-		display_err_msg_and_exit("Invalid file extension");
-	if (ft_strncmp(&filename[len - 4], ".cub", 4))
-		display_err_msg_and_exit("Invalid file extension");
-}
-
-static void	is_valid_texture(char* path, int type, t_all* all)
+static void	is_valid_texture(char *path, int type, t_all *p_all)
 {
 	int img_width = 64; //나중에 헤더에 정의
 	int img_height = 64;
@@ -21,25 +24,25 @@ static void	is_valid_texture(char* path, int type, t_all* all)
 		path++;
 	if (path[ft_strlen(path) - 1] == '\n') //개행 지우기
 		path[ft_strlen(path) - 1] = '\0';
-	tmp = mlx_xpm_file_to_image(all->mlx, path, &img_width, &img_height);
+	tmp = mlx_xpm_file_to_image(p_all->mlx, path, &img_width, &img_height);
 	if (!tmp)
 		display_err_msg_and_exit("Invalid image file");
 
 	e_flag = 1;
-	if (type == NO && !all->map_info.v_texture[NO] && e_flag--)
-		all->map_info.v_texture[NO] = tmp;
-	else if (type == SO && !all->map_info.v_texture[SO] && e_flag--)
-		all->map_info.v_texture[SO] = tmp;
-	else if (type == WE && !all->map_info.v_texture[WE] && e_flag--)
-		all->map_info.v_texture[WE] = tmp;
-	else if (type == EA && !all->map_info.v_texture[EA] && e_flag--)
-		all->map_info.v_texture[EA] = tmp;
+	if (type == NO && !p_all->map_info.v_texture[NO] && e_flag--)
+		p_all->map_info.v_texture[NO] = tmp;
+	else if (type == SO && !p_all->map_info.v_texture[SO] && e_flag--)
+		p_all->map_info.v_texture[SO] = tmp;
+	else if (type == WE && !p_all->map_info.v_texture[WE] && e_flag--)
+		p_all->map_info.v_texture[WE] = tmp;
+	else if (type == EA && !p_all->map_info.v_texture[EA] && e_flag--)
+		p_all->map_info.v_texture[EA] = tmp;
 	
 	if (e_flag)
 		display_err_msg_and_exit("Duplicate Elements");
 }
 
-static void	free_double_pointer(char** arr)
+static void	free_double_pointer(char **arr)
 {
 	int	i;
 
@@ -52,7 +55,7 @@ static void	free_double_pointer(char** arr)
 	free(arr);
 }
 
-static void	is_valid_color(char* color, int type, t_all* all)
+static void	is_valid_color(char *color, int type, t_all *p_all)
 {
 	char**	tmp;
 	int		rgb[3];
@@ -80,13 +83,13 @@ static void	is_valid_color(char* color, int type, t_all* all)
 		i++;
 	}
 	if (type == F)
-		all->map_info.f = result;
+		p_all->map_info.f = result;
 	else if (type == C)
-		all->map_info.c = result;
+		p_all->map_info.c = result;
 	free_double_pointer(tmp);
 }
 
-static void	is_valid_tile(char* line, t_all* all)
+static void	is_valid_tile(char *line, t_all *p_all)
 {
 	int 	i;
 
@@ -97,43 +100,43 @@ static void	is_valid_tile(char* line, t_all* all)
 			display_err_msg_and_exit("Invalid map");
 		i++;
 	}
-	all->map.dp_map[all->map_info.tile_cnt] = line;
-	if (all->map.col < (ft_strlen(line) - 1))
-		all->map.col = ft_strlen(line) - 1;
-	all->map_info.tile_cnt++;
+	p_all->map.dp_map[p_all->map_info.tile_cnt] = line;
+	if (p_all->map.col < (ft_strlen(line) - 1))
+		p_all->map.col = ft_strlen(line) - 1;
+	p_all->map_info.tile_cnt++;
 }
 
-void	check_type(char* line, t_all *all)
+void	check_type(char *line, t_all *p_all)
 {
 	int	i;
-	
+
 	i = 0;
 	while (line[i] == ' ')
 		i++;
-	if (line[i] == '\n' && (all->map_info.tile_cnt == 0 || all->map_info.tile_cnt == (int)all->map.row))
+	if (line[i] == '\n' && (p_all->map_info.tile_cnt == 0 || p_all->map_info.tile_cnt == (int)p_all->map.row))
 		return ;
-	if (all->map_info.info_cnt < 6)
+	if (p_all->map_info.info_cnt < 6)
 	{
 		if (line[i] == 'N' && line[i + 1] == 'O')
-			is_valid_texture(line += (i + 2), NO, all);
+			is_valid_texture(line += (i + 2), NO, p_all);
 		else if (line[i] == 'S' && line[i + 1] == 'O') 
-			is_valid_texture(line += (i + 2), SO, all);
+			is_valid_texture(line += (i + 2), SO, p_all);
 		else if (line[i] == 'W' && line[i + 1] == 'E')
-			is_valid_texture(line += (i + 2), WE, all);
+			is_valid_texture(line += (i + 2), WE, p_all);
 		else if (line[i] == 'E' && line[i + 1] == 'A')
-			is_valid_texture(line += (i + 2), EA, all);
+			is_valid_texture(line += (i + 2), EA, p_all);
 		else if (line[i] == 'F')
-			is_valid_color(line += (i + 1), F, all);
+			is_valid_color(line += (i + 1), F, p_all);
 		else if (line[i] == 'C')
-			is_valid_color(line += (i + 1), C, all);
+			is_valid_color(line += (i + 1), C, p_all);
 		else
-			display_err_msg_and_exit("Invalid element in map file1");		
-		all->map_info.info_cnt++;
+			display_err_msg_and_exit("Invalid element in map file");	
+		p_all->map_info.info_cnt++;
 		return ;
 	}
-	if (all->map_info.info_cnt == 6 && (line[i] == '1' || line[i] == '\n'))
-		is_valid_tile(line, all);
-	else if (all->map_info.info_cnt == 6 && line[i] == '\0')
+	if (p_all->map_info.info_cnt == 6 && (line[i] == '1' || line[i] == '\n'))
+		is_valid_tile(line, p_all);
+	else if (p_all->map_info.info_cnt == 6 && line[i] == '\0')
 		return ;
 	else
 		display_err_msg_and_exit("Invalid element in map file");

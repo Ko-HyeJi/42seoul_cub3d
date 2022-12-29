@@ -13,6 +13,12 @@ void ray_init(t_ray *p_ray, double ang)
 	p_ray->ray_faces_left = !(p_ray->ray_faces_right);
 }
 
+void	init_map(t_all *p_all)
+{
+	p_all->map.row = 0;
+	p_all->map.col = 0;
+}
+
 void	init_map_info(t_all *p_all)
 {
 	p_all->map_info.v_texture[NO] = 0;

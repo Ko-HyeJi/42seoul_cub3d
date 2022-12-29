@@ -194,11 +194,14 @@ void	init_key(t_all *p_all);
 void	ft_init(t_all *p_all);
 void	loop_hook(t_all *p_all);
 void	init_img_data(t_all *p_all);
+void	init_map(t_all *p_all);
+void	init_map_info(t_all *p_all);
 
-void	parse_map(int argc, char** argv, t_all* all);
-void	is_cub_file(const char* filename);
-void	check_type(char* line, t_all *all);
-void	display_err_msg_and_exit(const char* err_msg);
+void	parse_map(int argc, char **argv, t_all *p_all);
+// void	is_cub_file(const char *filename);
+void	check_type(char *line, t_all *p_all);
+void	display_err_msg_and_exit(const char *err_msg);
+void	is_vaild_map(t_all *p_all);
 
 void	set_texture_img(t_all* all);
 

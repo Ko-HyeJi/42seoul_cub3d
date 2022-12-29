@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-#define TILE_SIZE 64
+// #define TILE_SIZE 64
 
 typedef struct s_3d
 {
@@ -22,7 +22,7 @@ void	init_3D(t_all *all, t_3d *v)
 	
 	v->correct_distance = all->ray.distance	* cos(all->ray.ray_angle - all->player.rotation_angle);
 	v->distance_plane = (WINDOW_WID / 2) / tan(FOV_ANGLE / 2);
-	v->projected_height = (int)((TILE_SIZE / v->correct_distance) * v->distance_plane);
+	v->projected_height = (int)(((all->map.col_tile_size + all->map.row_tile_size) / 2 / v->correct_distance) * v->distance_plane);
 
 	v->top = (WINDOW_HEI / 2) - (v->projected_height / 2);
 	v->bottom = (WINDOW_HEI / 2) + (v->projected_height / 2);
