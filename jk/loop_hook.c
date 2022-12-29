@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int ft_loop_hook(t_all *p_all)
+int	ft_loop_hook(t_all *p_all)
 {
 	update_player(p_all);
 	render_map(p_all);
