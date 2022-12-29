@@ -7,8 +7,8 @@ void update_player(t_all *p_all)
 	double newPlayerX;
 	double newPlayerY;
 	double	move_side;
-	t_point	p1;
-	t_point	p2;
+	t_point_db	p1;
+	t_point_db	p2;
 
 	turnDirection = 0;
 	walkDirection = 0;
@@ -37,8 +37,8 @@ void update_player(t_all *p_all)
 	moveStep = walkDirection * p_all->player.walk_speed;
 	newPlayerX = p_all->player.x + moveStep * cos(p_all->player.rotation_angle - move_side);
 	newPlayerY = p_all->player.y + moveStep * sin(p_all->player.rotation_angle - move_side);
-	set_point(&p1, p_all->player.x, p_all->player.y);
-	set_point(&p2, newPlayerX, newPlayerY);
+	set_point_db(&p1, p_all->player.x, p_all->player.y);
+	set_point_db(&p2, newPlayerX, newPlayerY);
 	if (!hit_wall(newPlayerX, newPlayerY, p_all) && !check_edge(p_all, p1, p2))
 	{
 		p_all->player.x = newPlayerX;
@@ -50,9 +50,9 @@ void draw_player(t_all *p_all)
 {
 	int		x;
 	int		y;
-	t_point	p;
+	t_point_db	p;
 
-	set_point(&p, p_all->player.x, p_all->player.y);
+	set_point_db(&p, p_all->player.x, p_all->player.y);
 	locate_for_mini(&x, &y, p);
 	update_player(p_all);
 	int	row;

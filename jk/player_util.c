@@ -1,12 +1,12 @@
 #include "cub3d.h"
 
-void locate_for_mini(int *xp, int *yp, t_point p)
+void locate_for_mini(int *xp, int *yp, t_point_db p)
 {
 	*xp = (int)(MINI_SCALE * p.x);
 	*yp = (int)(MINI_SCALE * p.y);
 }
 
-bool	check_edge(t_all *p_all, t_point p1, t_point p2)
+bool	check_edge(t_all *p_all, t_point_db p1, t_point_db p2)
 {
 	int	dx;
 	int	dy;
