@@ -4,13 +4,13 @@ double normalize_fisheye(double ang)
 {
 	if (ang >= 0)
 	{
-		while (ang >= TWO_PI)
-			ang -= TWO_PI;
+		while (ang >= M_PI * 2)
+			ang -= M_PI * 2;
 	}
 	else
 	{
 		while (ang <= 0)
-			ang += TWO_PI;
+			ang += M_PI * 2;
 	}
 	return ang;
 }

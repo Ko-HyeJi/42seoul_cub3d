@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:29:16 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 18:31:01 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/29 19:41:38 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static void	set_player_location_and_direction(
 	p_all->player.y
 		= (double)(WINDOW_HEI / p_all->map.row) * ((double)(i) + 0.5);
 	if (p_all->map.dp_map[i][j] == 'N')
-		p_all->player.rotation_angle = 270;
+		p_all->player.rotation_angle = M_PI_2 + M_PI;
 	else if (p_all->map.dp_map[i][j] == 'S')
-		p_all->player.rotation_angle = 90;
+		p_all->player.rotation_angle = M_PI_2;
 	else if (p_all->map.dp_map[i][j] == 'E')
 		p_all->player.rotation_angle = 0;
 	else if (p_all->map.dp_map[i][j] == 'W')
-		p_all->player.rotation_angle = 180;
+		p_all->player.rotation_angle = M_PI;
 }
 
 static void	check_border(char **map, int row, int col)

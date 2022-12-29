@@ -6,12 +6,12 @@ static void	set_texture_buffer(int *texture_img, t_img *img)
 	int	y;
 
 	y = 0;
-	while (y < TEXTURE_HEIGHT)
+	while (y < TEXTURE_SIZE)
 	{
 		x = 0;
-		while (x < TEXTURE_WIDTH)
+		while (x < TEXTURE_SIZE)
 		{
-			texture_img[(TEXTURE_WIDTH * y) + x] = img->data[(TEXTURE_WIDTH * y) + x];
+			texture_img[(TEXTURE_SIZE * y) + x] = img->data[(TEXTURE_SIZE * y) + x];
 			x++;
 		}
 		y++;
@@ -29,7 +29,7 @@ static int	*load_image(t_all* all, int dir)
 	// 	display_err_msg_and_exit("mlx image_data error");
 	if (!img.data)
 		display_err_msg_and_exit("mlx image_data error");
-	texture_img = (int *)malloc(sizeof(int) * (TEXTURE_HEIGHT * TEXTURE_WIDTH));
+	texture_img = (int *)malloc(sizeof(int) * (TEXTURE_SIZE * TEXTURE_SIZE));
 	if (!texture_img)
 		display_err_msg_and_exit("texture_img : malloc error");
 	set_texture_buffer(texture_img, &img);

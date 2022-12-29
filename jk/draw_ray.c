@@ -67,13 +67,13 @@ void	draw_ray(t_all *p_all)
 	double	max_angle;
 	int		i;
 
-	angle = p_all->player.rotation_angle - (FOV_ANGLE / 2.0);
-	max_angle = p_all->player.rotation_angle + (FOV_ANGLE / 2.0);
+	angle = p_all->player.rotation_angle - (p_all->player.fov_angle / 2.0);
+	max_angle = p_all->player.rotation_angle + (p_all->player.fov_angle / 2.0);
 	i = 0;
 	while (i < RAY_COUNT)
 	{
 		draw_one_ray(p_all, angle, i);
-		angle += FOV_ANGLE / RAY_COUNT;
+		angle += p_all->player.fov_angle / RAY_COUNT;
 		i++;
 	}
 }

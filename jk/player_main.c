@@ -20,12 +20,12 @@ void update_player(t_all *p_all)
 	if (p_all->key.right)
 	{
 		walkDirection = -1;
-		move_side = HALF_PI;
+		move_side = M_PI_2;
 	}
 	if (p_all->key.left)
 	{
 		walkDirection = 1;
-		move_side = PI / 2.0;
+		move_side = M_PI / 2.0;
 	}
 	if (p_all->key.right_rotation)
 		turnDirection = 1;
