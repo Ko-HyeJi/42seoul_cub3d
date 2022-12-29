@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:20:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 18:27:24 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/29 21:00:52 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	parse_map(int argc, char **argv, t_all *p_all)
 	if (argc != 2)
 		display_err_msg_and_exit("Invalid argument");
 	is_cub_file(argv[1]);
-	init_map(p_all);
 	get_row(argv[1], p_all);
 	init_map_info(p_all);
 	fd = open(argv[1], O_RDONLY);
@@ -106,7 +105,7 @@ void	parse_map(int argc, char **argv, t_all *p_all)
 	{
 		line = get_next_line(fd);
 		if (line)
-			check_type(line, p_all);
+			get_map_info(line, p_all);
 	}
 	free(line);
 	close(fd);

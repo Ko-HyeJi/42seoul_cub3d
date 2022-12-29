@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC 			=	cc
-CCFLAGS		=	-Wall -Wextra -Werror#-g3 -fsanitize=address
+CCFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRC			=	main.c \
 				minimap.c \
@@ -12,8 +12,6 @@ SRC			=	main.c \
 				get_next_line.c \
 				get_next_line_util.c \
 				3d_render.c \
-				parse_map.c \
-				map_info.c \
 				texture.c \
 				init.c \
 				init2.c \
@@ -21,6 +19,9 @@ SRC			=	main.c \
 				util.c \
 				ray_util.c \
 				loop_hook.c \
+				parse_map.c \
+				get_map_info.c \
+				set_map_info.c \
 				check_map.c
 				
 OBJ	=	$(SRC:.c=.o)

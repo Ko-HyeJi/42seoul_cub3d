@@ -18,6 +18,7 @@ void	init_map(t_all *p_all)
 {
 	p_all->map.row = 0;
 	p_all->map.col = 0;
+	p_all->map.dp_map = 0;
 }
 
 void	init_map_info(t_all *p_all)
@@ -32,7 +33,7 @@ void	init_map_info(t_all *p_all)
 	p_all->map_info.i_texture[EA] = 0;
 	p_all->map_info.f = 0;
 	p_all->map_info.c = 0;
-	p_all->map.dp_map = (char **)malloc(sizeof(char *) * (p_all->map.row + 1));
 	p_all->map_info.info_cnt = 0;
 	p_all->map_info.tile_cnt = 0;
+	p_all->map.dp_map = (char **)malloc(sizeof(char *) * (p_all->map.row + 1));
 }

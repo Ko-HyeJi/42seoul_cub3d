@@ -55,4 +55,5 @@ void	ft_init(t_all *p_all)
 	init_player(p_all);
 	init_key(p_all);
 	init_mlx(p_all);
+	init_map(p_all);
 }
