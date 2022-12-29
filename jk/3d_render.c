@@ -21,7 +21,7 @@ void	init_3D(t_all *all, t_3d *v)
 		all->ray.distance = 0.1;
 	
 	v->correct_distance = all->ray.distance	* cos(all->ray.ray_angle - all->player.rotation_angle);
-	v->distance_plane = (WINDOW_WID / 2) / tan(FOV_ANGLE / 2);
+	v->distance_plane = (WINDOW_WID / 2) / tan(all->player.fov_angle / 2);
 	v->projected_height = (int)(((all->map.col_tile_size + all->map.row_tile_size) / 2 / v->correct_distance) * v->distance_plane);
 
 	v->top = (WINDOW_HEI / 2) - (v->projected_height / 2);
@@ -107,7 +107,7 @@ int	set_wall_color(t_all *all, t_3d *v, int r)
 		col = ((int)(all->ray.yhit_wall) % (int)(all->map.row_tile_size)) * (64 / all->map.row_tile_size);
 	else
 		col = ((int)(all->ray.xhit_wall) % (int)(all->map.col_tile_size)) * (64 / all->map.col_tile_size);
-	row = (((v->correct_top - v->top + r) * TEXTURE_HEIGHT) / v->height);
+	row = (((v->correct_top - v->top + r) * TEXTURE_SIZE) / v->height);
 
 	return (all->map_info.i_texture[direction][64 * row + col]);
 }

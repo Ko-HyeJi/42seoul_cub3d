@@ -24,7 +24,8 @@ void init_player(t_all *p_all)
 	p_all->player.y = WINDOW_HEI / 2;
 	p_all->player.rotation_angle = 0;// E일 경우.오른쪽을 봄
 	p_all->player.walk_speed = 1;
-	p_all->player.turn_speed = 2 * (PI / 180);//?
+	p_all->player.turn_speed = 2 * (M_PI / 180);//?
+	p_all->player.fov_angle = M_PI / 3;
 }
 
 void	init_key(t_all *p_all)

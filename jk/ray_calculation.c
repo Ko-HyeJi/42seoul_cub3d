@@ -7,7 +7,7 @@ double distance_btw_points(double xa, double ya, double xb, double yb)
 
 void calc_distance(t_all *p_all, t_temp_ray *hv)
 {
-	if (hv->found_wallHit)
+	if (hv->found_wall_hit)
 		hv->distance = distance_btw_points(p_all->player.x, p_all->player.y
 										, hv->xhit_wall, hv->yhit_wall);
 	else
@@ -16,7 +16,7 @@ void calc_distance(t_all *p_all, t_temp_ray *hv)
 
 void calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
 {
-	p_horz->found_wallHit = false;
+	p_horz->found_wall_hit = false;
 	p_horz->xhit_wall = 0;
 	p_horz->yhit_wall = 0;
 
@@ -50,7 +50,7 @@ void calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
 
 void calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 {
-	p_vert->found_wallHit = false;
+	p_vert->found_wall_hit = false;
 	p_vert->xhit_wall = 0;
 	p_vert->yhit_wall = 0;
 
@@ -95,7 +95,7 @@ void calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b)
 	{
 		if (hit_wall(xnext_touch - a, ynext_touch - b, p_all))
 		{
-			hv->found_wallHit = true;
+			hv->found_wall_hit = true;
 			hv->xhit_wall = xnext_touch;
 			hv->yhit_wall = ynext_touch;
 			break;
