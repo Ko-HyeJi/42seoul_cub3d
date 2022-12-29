@@ -82,7 +82,7 @@ typedef struct	s_point
 	double	y;
 }				t_point;
 
-typedef struct	s_map_info //map 구조체에 합칠지 고민중...(hyko)
+typedef struct	s_map_info
 {
 	void	*v_texture[4];
 	int		*i_texture[4];
@@ -193,7 +193,8 @@ void	init_mlx(t_all *p_all);
 void	init_key(t_all *p_all);
 void	ft_init(t_all *p_all);
 void	loop_hook(t_all *p_all);
-void	init_img_data(t_all* p_all);
+void	init_img_data(t_all *p_all);
+void	init_map_info(t_all *p_all);
 
 void	parse_map(int argc, char** argv, t_all* all);
 void	is_cub_file(const char* filename);
