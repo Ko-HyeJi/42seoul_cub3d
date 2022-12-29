@@ -15,9 +15,8 @@ int	key_press(int keycode, t_all *p_all)
 	else if (keycode == K_LEFT)
 		p_all->key.left_rotation = true;
 	else if (keycode == K_ESC)
-		exit(0);
-	
-    return (0);
+		exit (0);
+	return (0);
 }
 
 int	key_release(int keycode, t_all *p_all)
@@ -35,8 +34,7 @@ int	key_release(int keycode, t_all *p_all)
 	else if (keycode == K_LEFT)
 		p_all->key.left_rotation = false;
 	else if (keycode == K_ESC)
-		exit(0);
-        
+		exit (0);
 	return (0);
 }
 
