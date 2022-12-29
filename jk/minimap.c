@@ -1,29 +1,5 @@
 #include "cub3d.h"
 
-void init_img_data(t_all* p_all) 
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < WINDOW_HEI)
-	{
-		x = 0;
-		while (x < WINDOW_WID)
-		{
-			p_all->img.data[WINDOW_WID * y + x] = 0;
-			x++;
-		}
-		y++;
-	}
-}
-
-void locate_for_mini(int *xp, int *yp, t_point p)
-{
-	*xp = (int)(MINI_SCALE * p.x);
-	*yp = (int)(MINI_SCALE * p.y);
-}//미니맵 위치 좌상단으로 변경
-
 void fill_square(t_all *p_all, int x, int y, int color)
 {
 	int j;
@@ -42,18 +18,17 @@ void fill_square(t_all *p_all, int x, int y, int color)
 			j++;
 		}
 		k++;
-	}//타일 하나 그림
+	}
 }
 
 void render_map(t_all *p_all)
 {
 	unsigned long long	j;
 	unsigned long long	k;
-	//미니맵과, 3d 동시에 그려주기.
 
 	init_img_data(p_all);
 	k = 0;
-	while (k < p_all->map.row)//미니맵 그리기
+	while (k < p_all->map.row)
 	{
 		j = 0;
 		while (j < p_all->map.col)

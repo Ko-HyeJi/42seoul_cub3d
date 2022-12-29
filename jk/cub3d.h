@@ -168,7 +168,7 @@ void	calc_vert_ray(t_all *p_all, t_temp_ray *p_vert);
 void	draw_line(t_all *p_all, double dx, double dy);
 void	draw_one_ray(t_all *p_all, double ang, int i);
 void	draw_ray(t_all *p_all);
-double	normalize_angle(double ang);
+double	normalize_fisheye(double ang);
 
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);

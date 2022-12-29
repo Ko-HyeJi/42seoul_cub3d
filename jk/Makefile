@@ -5,7 +5,8 @@ CCFLAGS		=	-Wall -Wextra -Werror#-g3 -fsanitize=address
 
 SRC			=	main.c \
 				minimap.c \
-				playeronmap.c \
+				player_main.c \
+				player_util.c \
 				draw_ray.c \
 				key_mouse.c \
 				get_next_line.c \
@@ -15,6 +16,8 @@ SRC			=	main.c \
 				map_info.c \
 				texture.c \
 				init.c \
+				init2.c \
+				calculate.c \
 				loop_hook.c
 				
 OBJ	=	$(SRC:.c=.o)
