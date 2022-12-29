@@ -1,7 +1,6 @@
 NAME = cub3D
 
 CC 			=	cc
-CC_M1 		=	arch -x86_64 cc
 CCFLAGS		=	-Wall -Wextra -Werror#-g3 -fsanitize=address
 
 SRC			=	main.c \
@@ -32,13 +31,11 @@ all	:	$(NAME)
 	
 .c.o	:
 	$(CC) $(CCFLAGS) -c $< -o $@
-#	$(CC_M1) $(CCFLAGS) -c $< -o $@
 
 $(NAME)	: $(OBJ)
 	make all -C $(LIBFT_PATH)
 #	make all -C $(MLX_PATH)
 	$(CC) $(CCFLAGS) $(MLX_FLAGS) $(LIBFT_FLAGS) $(OBJ) -o $(NAME)
-#	$(CC_M1) $(CCFLAGS) $(MLX_FLAGS) $(OBJ) -o $(NAME)
 
 clean	:
 	make clean -C $(LIBFT_PATH)
