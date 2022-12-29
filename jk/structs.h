@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:56:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 20:03:30 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/29 20:34:41 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,17 @@ typedef struct s_map
 	double				col_tile_size;
 }				t_map;
 
-typedef struct s_point
+typedef struct s_point_db
 {
 	double	x;
 	double	y;
-}				t_point;
+}				t_point_db;
+
+typedef struct s_point_i
+{
+	int	x;
+	int	y;
+}				t_point_i;
 
 typedef struct s_map_info
 {

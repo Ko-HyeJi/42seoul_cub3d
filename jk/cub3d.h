@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:48:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 20:02:56 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/29 20:42:02 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ char	*rtg(char *save);
 char	*read_and_save(int fd, char *save);
 char	*get_next_line(int fd);
 
-void	locate_for_mini(int *xp, int *yp, t_point p);
+void	locate_for_mini(int *xp, int *yp, t_point_db p);
 
 void	render_3d_wall(t_all *p_all, int ray_num);
-void	set_point(t_point *p_point, double x, double y);
+void	set_point_db(t_point_db *p_point, double x, double y);
 void	render_3d(t_all *p_all);
 
 void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color);
@@ -103,8 +103,10 @@ void	display_err_msg_and_exit(const char *err_msg);
 
 void	set_texture_img(t_all *all);
 
-bool	check_edge(t_all *p_all, t_point p1, t_point p2);
+bool	check_edge(t_all *p_all, t_point_db p1, t_point_db p2);
 
 int		mouse(void);
+
+void	set_point_i(t_point_i *p_point, int x, int y);
 
 #endif
