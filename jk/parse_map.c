@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:20:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 22:34:02 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/29 22:37:47 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	display_err_msg_and_exit(const char *err_msg)
 {
-	// free
 	printf("ERROR\n");
 	printf("%s\n", err_msg);
 	exit (1);
