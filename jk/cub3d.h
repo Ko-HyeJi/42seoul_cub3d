@@ -69,12 +69,12 @@ typedef struct	s_ray
 
 typedef struct	s_map
 {
-	unsigned long long	row;//ull로 해도 되겠지..?
+	unsigned long long	row;
 	unsigned long long	col;
 	char				**dp_map;
 	double	row_tile_size;
 	double	col_tile_size;
-}				t_map;//필요시 minimap으로
+}				t_map;
 
 typedef struct	s_point
 {
@@ -128,13 +128,11 @@ typedef struct	s_all
 #define PI     (3.14159265358979323846264338327950288)
 #define TWO_PI (6.28318530717958647692528676655900576)
 #define HALF_PI (1.57079632679489661923132169163975144)
-// #define RAY_COUNT 121
 #define RAY_COUNT WINDOW_WID
 
 #define BUFFER_SIZE 333
 
 #define FOV_ANGLE 60 * (PI / 180.0)
-// #define WALL_STRIP_WIDTH (WINDOW_WID / RAY_COUNT)
 #define WALL_STRIP_WIDTH 1
 #define	BLUE 0x0000FF
 #define	WHITE 0xFFFFFF
@@ -142,9 +140,6 @@ typedef struct	s_all
 #define	BLACK 0x000001 //초기화 값과 구분하기 위해 블루 한방울...(hyko)
 #define	PINK 0xFF00FF
 #define	RED 0xFF0000
-
-// #define SKY 0x66CCFF
-// #define GROUND 0x66CC66
 
 #define COLOR_N RED
 #define COLOR_S BLUE
@@ -161,13 +156,12 @@ void	update_player(t_all *p_all);
 void	fill_square(t_all *p_all, int x, int y, int color);
 void	render_map(t_all *p_all);
 void	draw_player(t_all *p_all);
-int		ft_loop(t_all *p_all);
+int		ft_loop_hook(t_all *p_all);
 int		key_release(int keycode, t_all *p_all);
 
 void	ray_init(t_ray *p_ray, double ang);
 void	calc_distance(t_all *p_all, t_temp_ray *hv);
 double	distance_btw_points(double xa, double ya, double xb, double yb);
-// void	calc_ray(t_all *p_all, t_temp_ray *hv);
 void	calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b);
 void	calc_horz_ray(t_all *p_all, t_temp_ray *p_horz);
 void	calc_vert_ray(t_all *p_all, t_temp_ray *p_vert);
