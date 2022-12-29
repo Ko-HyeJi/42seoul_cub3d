@@ -204,4 +204,6 @@ void	set_texture_img(t_all* all);
 
 bool	check_edge(t_all *p_all, t_point p1, t_point p2);
 
+int	mouse(void);
+
 #endif

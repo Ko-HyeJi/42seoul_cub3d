@@ -39,3 +39,8 @@ int	key_release(int keycode, t_all *p_all)
         
 	return (0);
 }
+
+int	mouse(void)
+{
+	exit(0);
+}

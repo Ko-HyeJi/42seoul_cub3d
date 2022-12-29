@@ -7,13 +7,15 @@ SRC			=	main.c \
 				minimap.c \
 				playeronmap.c \
 				draw_ray.c \
-				key.c \
+				key_mouse.c \
 				get_next_line.c \
 				get_next_line_util.c \
 				3d_render.c \
 				parse_map.c \
 				map_info.c \
-				texture.c
+				texture.c \
+				init.c \
+				loop_hook.c
 				
 OBJ	=	$(SRC:.c=.o)
 
