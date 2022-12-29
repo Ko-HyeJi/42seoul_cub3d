@@ -1,28 +1,36 @@
 #include "cub3d.h"
 
+void	init_for_draw_line()
+{
+
+}
+
 void	draw_line(t_all *p_all, double dx, double dy)
 {
-	double	ray_x;
-	double	ray_y;
+	double	x_ray;
+	double	y_ray;
 	double	max_val;
 	int		x;
 	int		y;
+	t_point	delta;
 	t_point	p1;
 	t_point	p2;
 
-	ray_x = p_all->player.x;
-	ray_y = p_all->player.y;
+	x_ray = p_all->player.x;
+	y_ray = p_all->player.y;
 	max_val = fmax(fabs(dx), fabs(dy));
 	if (max_val == 0)
 		return ;
 	x = 0;
 	y = 0;
-	dx /= max_val;
-	dy /= max_val;
+	// dx /= max_val;
+	// dy /= max_val;
+	set_point(&delta, dx / max_val, dy / max_val);
+
 	while (1)
 	{
-		set_point(&p1, ray_x, ray_y);
-		set_point(&p2, ray_x + dx, ray_y + dy);
+		set_point(&p1, x_ray, y_ray);
+		set_point(&p2, x_ray + delta.x, y_ray + delta.y);
 		if (!hit_wall(p2.x, p2.y, p_all) && !check_edge(p_all, p1, p2))
 		{
 			locate_for_mini(&x, &y, p1);
@@ -30,8 +38,8 @@ void	draw_line(t_all *p_all, double dx, double dy)
 		}
 		else
 			break ;
-		ray_x += dx;
-		ray_y += dy;
+		x_ray += delta.x;
+		y_ray += delta.y;
 	}
 }
 
