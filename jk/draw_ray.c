@@ -1,45 +1,30 @@
 #include "cub3d.h"
 
-void	init_for_draw_line()
-{
-
-}
-
 void	draw_line(t_all *p_all, double dx, double dy)
 {
-	double	x_ray;
-	double	y_ray;
-	double	max_val;
-	int		x;
-	int		y;
-	t_point	delta;
-	t_point	p1;
-	t_point	p2;
+	t_point_db	xy_ray;
+	t_point_db	delta;
+	t_point_db	p2;
+	t_point_i	xy_row;
+	double		max_val;
 
-	x_ray = p_all->player.x;
-	y_ray = p_all->player.y;
+	set_point_db(&xy_ray, p_all->player.x, p_all->player.y);
+	set_point_i(&xy_row, 0, 0);
 	max_val = fmax(fabs(dx), fabs(dy));
 	if (max_val == 0)
 		return ;
-	x = 0;
-	y = 0;
-	// dx /= max_val;
-	// dy /= max_val;
-	set_point(&delta, dx / max_val, dy / max_val);
-
+	set_point_db(&delta, dx / max_val, dy / max_val);
 	while (1)
 	{
-		set_point(&p1, x_ray, y_ray);
-		set_point(&p2, x_ray + delta.x, y_ray + delta.y);
-		if (!hit_wall(p2.x, p2.y, p_all) && !check_edge(p_all, p1, p2))
+		set_point_db(&p2, xy_ray.x + delta.x, xy_ray.y + delta.y);
+		if (!hit_wall(p2.x, p2.y, p_all) && !check_edge(p_all, xy_ray, p2))
 		{
-			locate_for_mini(&x, &y, p1);
-			p_all->img.data[WINDOW_WID * y + x] = RED;
+			locate_for_mini(&(xy_row.x), &(xy_row.y), xy_ray);
+			p_all->img.data[WINDOW_WID * (xy_row.y) + (xy_row.x)] = RED;
 		}
 		else
 			break ;
-		x_ray += delta.x;
-		y_ray += delta.y;
+		set_point_db(&xy_ray, xy_ray.x + delta.x, xy_ray.y + delta.y);
 	}
 }
 
@@ -65,7 +50,9 @@ void	draw_one_ray(t_all *p_all, double ang, int i)
 		p_all->ray.distance = horz.distance;
 		p_all->ray.vert_hit = false;
 	}
-	draw_line(p_all, p_all->ray.xhit_wall - p_all->player.x, p_all->ray.yhit_wall - p_all->player.y);
+	draw_line(p_all,
+		p_all->ray.xhit_wall - p_all->player.x,
+		p_all->ray.yhit_wall - p_all->player.y);
 	render_3d_wall(p_all, i);
 }
 
