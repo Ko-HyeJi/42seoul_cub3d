@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:48:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 21:07:26 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/30 21:17:29 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@
 
 # define BUFFER_SIZE 333
 
-# define WALL_STRIP_WIDTH 1
+# define WALL_STRIP 1
 # define BLUE 0x0000FF
 # define WHITE 0xFFFFFF
 # define BLACK 0x000001
 # define RED 0xFF0000
-
 
 int		key_press(int keycode, t_all *p_all);
 void	init_player(t_all *p_all);
@@ -95,6 +94,7 @@ void	loop_hook(t_all *p_all);
 void	init_img_data(t_all *p_all);
 void	init_map(t_all *p_all);
 void	init_map_info(t_all *p_all);
+void	init_3d(t_all *all);
 
 void	parse_map(int argc, char **argv, t_all *p_all);
 void	get_map_info(char *line, t_all *p_all);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:56:49 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 20:34:41 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/30 19:55:56 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,19 @@ typedef enum e_type
 	TILE,
 }				t_type;
 
+typedef struct s_3d
+{
+	double	correct_distance;
+	double	distance_plane;
+	int		projected_height;
+	int		top;
+	int		correct_top;
+	int		bottom;
+	int		correct_bottom;
+	int		height;
+	int		width;
+}				t_3d;
+
 typedef struct s_all
 {
 	t_img		img;
@@ -122,6 +135,7 @@ typedef struct s_all
 	void		*mlx;
 	void		*win;
 	t_map_info	map_info;
+	t_3d		v;
 }				t_all;
 
 #endif

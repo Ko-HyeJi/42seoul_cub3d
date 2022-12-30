@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:20:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 22:37:47 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/30 21:43:48 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ static void	is_cub_file(const char *filename)
 		display_err_msg_and_exit("Invalid file extension");
 }
 
-static void	get_row(char *filename, t_all *p_all)
+static void	get_row(t_all *p_all, int fd)
 {
 	char	*tmp;
-	int		fd;
 	int		i;
 	int		map_flag;
 
-	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		display_err_msg_and_exit("Invalid File");
 	while (1)
@@ -98,9 +96,11 @@ void	parse_map(int argc, char **argv, t_all *p_all)
 	if (argc != 2)
 		display_err_msg_and_exit("Invalid argument");
 	is_cub_file(argv[1]);
-	get_row(argv[1], p_all);
+	fd = open(argv[1], O_RDONLY);
+	get_row(p_all, fd);
 	init_map_info(p_all);
 	fd = open(argv[1], O_RDONLY);
+	printf("%d\n", fd);
 	while (1)
 	{
 		line = get_next_line(fd);
