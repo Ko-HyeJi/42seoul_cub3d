@@ -2,11 +2,12 @@ NO ../textures/eagle.xpm
 SO ../textures/redbrick.xpm
 WE ../textures/greystone.xpm
 EA ../textures/bluestone.xpm
+
 F 50,50,50
 C 100,100,100
 
 1111111
 1000001
-1000N01
+100N001
 1000001
 1111111
