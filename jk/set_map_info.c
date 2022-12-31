@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 20:17:47 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/29 20:53:06 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 14:04:29 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,7 @@ void	is_valid_tile(char *line, t_all *p_all)
 	p_all->map.dp_map[p_all->map_info.tile_cnt] = line;
 	if (p_all->map.col < (ft_strlen(line) - 1))
 		p_all->map.col = ft_strlen(line) - 1;
+	if (p_all->map.col > 42)
+		display_err_msg_and_exit("Map Too Big");
 	p_all->map_info.tile_cnt++;
 }

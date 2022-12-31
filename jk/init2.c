@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:11:33 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/30 21:11:34 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 14:18:30 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ void	init_map_info(t_all *p_all)
 	p_all->map_info.c = 0;
 	p_all->map_info.info_cnt = 0;
 	p_all->map_info.tile_cnt = 0;
-	p_all->map.dp_map = (char **)malloc(sizeof(char *) * (p_all->map.row + 1));
+	if (p_all->map.row <= 42)
+		p_all->map.dp_map
+			= (char **)malloc(sizeof(char *) * (p_all->map.row + 1));
+	else
+		display_err_msg_and_exit("Map Too Big");
 }
 
 void	init_3d(t_all *p_all)
