@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:48:42 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 16:03:27 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:25:13 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,9 @@ void	draw_player(t_all *p_all)
 	int			x;
 	int			y;
 	t_point_db	p;
-	int			row;
-	int			col;
 
 	set_point_db(&p, p_all->player.x, p_all->player.y);
 	locate_for_mini(&x, &y, p);
 	update_player(p_all);
-	row = (-(MINI_SCALE * p_all->map.row_tile_size) / 10);
-	while (row <= (MINI_SCALE * p_all->map.row_tile_size / 10))
-	{
-		col = (-(MINI_SCALE * p_all->map.col_tile_size) / 10);
-		while (col <= (MINI_SCALE * p_all->map.col_tile_size / 10))
-		{
-			p_all->img.data[WINDOW_WID * (y + row) + (x + col)] = BLUE;
-			col++;
-		}
-		row++;
-	}
 	draw_ray(p_all);
 }

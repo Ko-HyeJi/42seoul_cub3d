@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:47:27 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 16:00:08 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:24:37 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_loop_hook(t_all *p_all)
 {
 	update_player(p_all);
-	render_map(p_all);
+	init_img_data(p_all);
 	draw_player(p_all);
 	mlx_put_image_to_window(p_all->mlx, p_all->win, p_all->img.img, 0, 0);
 	return (0);
