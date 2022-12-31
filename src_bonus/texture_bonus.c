@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture.c                                          :+:      :+:    :+:   */
+/*   texture_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:16:08 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/30 21:17:01 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 16:31:25 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	copy_texture(int *texture_img, t_img *img)
 {
@@ -43,7 +43,7 @@ static int	*load_image(t_all *p_all, int dir)
 		display_err_msg_and_exit("mlx image_data error");
 	texture_img = (int *)malloc(sizeof(int) * (TEXTURE_SIZE * TEXTURE_SIZE));
 	if (!texture_img)
-		display_err_msg_and_exit("texture_img : malloc error");
+			display_err_msg_and_exit("Malloc Failed");
 	copy_texture(texture_img, &img);
 	mlx_destroy_image(p_all->mlx, img.img);
 	return (texture_img);

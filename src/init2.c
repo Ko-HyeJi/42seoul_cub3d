@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:11:33 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/31 16:06:11 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:35:11 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ void	init_map_info(t_all *p_all)
 	p_all->map_info.info_cnt = 0;
 	p_all->map_info.tile_cnt = 0;
 	if (p_all->map.row <= 42)
+	{
 		p_all->map.dp_map
 			= (char **)malloc(sizeof(char *) * (p_all->map.row + 1));
+		if (!p_all->map.dp_map)
+			display_err_msg_and_exit("Malloc Failed");
+	}
 	else
 		display_err_msg_and_exit("Map Too Big");
 }

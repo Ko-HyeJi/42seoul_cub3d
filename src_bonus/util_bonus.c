@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_util.c                                         :+:      :+:    :+:   */
+/*   util_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/31 15:48:49 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:50:57 by jeekim           ###   ########.fr       */
+/*   Created: 2022/12/31 15:48:54 by jeekim            #+#    #+#             */
+/*   Updated: 2022/12/31 16:27:10 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
-double	normalize(double ang)
+void	set_point_db(t_point_db *p_point, double x, double y)
 {
-	if (ang >= 0)
-	{
-		while (ang >= M_PI * 2)
-			ang -= M_PI * 2;
-	}
-	else
-	{
-		while (ang <= 0)
-			ang += M_PI * 2;
-	}
-	return (ang);
+	p_point->x = x;
+	p_point->y = y;
+}
+
+void	set_point_i(t_point_i *p_point, int x, int y)
+{
+	p_point->x = x;
+	p_point->y = y;
 }

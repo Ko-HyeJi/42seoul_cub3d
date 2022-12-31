@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_calculation.c                                  :+:      :+:    :+:   */
+/*   ray_calculation_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:48:46 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 16:03:48 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:27:10 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 static double	distance_btw_points(double xa, double ya, double xb, double yb)
 {

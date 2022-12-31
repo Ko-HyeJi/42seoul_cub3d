@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/31 15:48:54 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:50:42 by jeekim           ###   ########.fr       */
+/*   Created: 2022/12/31 15:47:29 by jeekim            #+#    #+#             */
+/*   Updated: 2022/12/31 16:27:10 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
-void	set_point_db(t_point_db *p_point, double x, double y)
+int	main(int argc, char **argv)
 {
-	p_point->x = x;
-	p_point->y = y;
-}
+	t_all	all;
 
-void	set_point_i(t_point_i *p_point, int x, int y)
-{
-	p_point->x = x;
-	p_point->y = y;
+	ft_init(&all);
+	parse_map(argc, argv, &all);
+	set_texture_img(&all);
+	loop_hook(&all);
+	return (0);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_util.c                                      :+:      :+:    :+:   */
+/*   player_util_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:48:44 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:48:45 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:27:10 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 double	if_true_change_val(bool true_false, int set_val, double ret)
 {

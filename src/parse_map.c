@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:20:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/31 15:05:02 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 16:39:54 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,14 @@ static void	fill_map(t_all *p_all)
 	{
 		tmp = p_all->map.dp_map[i];
 		p_all->map.dp_map[i] = malloc(sizeof(char) * (p_all->map.col + 1));
-		j = 0;
-		while (tmp[j] != '\n')
-		{
+		if (!p_all->map.dp_map[i])
+			display_err_msg_and_exit("Malloc Failed");
+		j = -1;
+		while (tmp[++j] != '\n')
 			p_all->map.dp_map[i][j] = tmp[j];
-			j++;
-		}
-		while (j < p_all->map.col)
-		{
+		j -= 1;
+		while (++j < p_all->map.col)
 			p_all->map.dp_map[i][j] = ' ';
-			j++;
-		}
 		p_all->map.dp_map[i][j] = '\0';
 		free(tmp);
 		i++;
