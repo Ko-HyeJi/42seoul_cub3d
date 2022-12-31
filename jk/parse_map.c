@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 17:20:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/30 21:43:48 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 15:05:02 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	parse_map(int argc, char **argv, t_all *p_all)
 	get_row(p_all, fd);
 	init_map_info(p_all);
 	fd = open(argv[1], O_RDONLY);
-	printf("%d\n", fd);
 	while (1)
 	{
 		line = get_next_line(fd);
