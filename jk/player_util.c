@@ -1,5 +1,13 @@
 #include "cub3d.h"
 
+double	if_true_change_val(bool true_false, int set_val, double ret)
+{
+	if (true_false == true)
+		return (set_val);
+	else
+		return (ret);
+}
+
 void locate_for_mini(int *xp, int *yp, t_point_db p)
 {
 	*xp = (int)(MINI_SCALE * p.x);

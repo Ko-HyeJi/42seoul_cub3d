@@ -1,20 +1,13 @@
 #include "cub3d.h"
 
-void	update_player2(t_all *p_all, t_point_db	*p_old_player, t_point_db	*p_new_player)
+double	ft_cos(t_player *p_player, t_point_db *p_mv)
 {
-	if (!hit_wall((*p_new_player).x, (*p_new_player).y, p_all) && !check_edge(p_all, *p_old_player, *p_new_player))
-	{
-		p_all->player.x = (*p_new_player).x;
-		p_all->player.y = (*p_new_player).y;
-	}
+	return (p_player->x + (int)(p_mv->y) * cos(p_player->rotation_angle - p_mv->x));
 }
 
-double	if_true_change_val(bool true_false, int set_val, double ret)
+double	ft_sin(t_player *p_player, t_point_db *p_mv)
 {
-	if (true_false == true)
-		return (set_val);
-	else
-		return (ret);
+	return (p_player->y + (int)(p_mv->y) * sin(p_player->rotation_angle - p_mv->x));
 }
 
 void	update_player(t_all *p_all)
@@ -43,10 +36,17 @@ void	update_player(t_all *p_all)
 	p_all->player.rotation_angle += dir.y * p_all->player.turn_speed;
 	set_point_db(&mv, mv.x, (int)(dir.x * p_all->player.walk_speed));
 	set_point_db(&old_player, p_all->player.x, p_all->player.y);
-	set_point_db(&new_player,
-		old_player.x + (int)(mv.y) *cos(p_all->player.rotation_angle - mv.x),
-		old_player.y + (int)(mv.y) *sin(p_all->player.rotation_angle - mv.x));
+	set_point_db(&new_player, ft_cos(&(p_all->player), &mv), ft_sin(&(p_all->player), &mv));
 	update_player2(p_all, &old_player, &new_player);
+}
+
+void	update_player2(t_all *p_all, t_point_db	*p_old_player, t_point_db	*p_new_player)
+{
+	if (!hit_wall((*p_new_player).x, (*p_new_player).y, p_all) && !check_edge(p_all, *p_old_player, *p_new_player))
+	{
+		p_all->player.x = (*p_new_player).x;
+		p_all->player.y = (*p_new_player).y;
+	}
 }
 
 void	draw_player(t_all *p_all)
