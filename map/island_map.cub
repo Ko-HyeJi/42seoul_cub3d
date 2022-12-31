@@ -1,7 +1,7 @@
-NO ../textures/bluestone.xpm
-SO ../textures/colorstone.xpm
-WE ../textures/purplestone.xpm
-EA ../textures/wood.xpm
+NO textures/bluestone.xpm
+SO textures/colorstone.xpm
+WE textures/purplestone.xpm
+EA textures/wood.xpm
 
 C 0,191,255
 F 97,144,0
