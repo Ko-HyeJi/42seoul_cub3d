@@ -3,7 +3,7 @@ NAME = cub3D
 CC 			=	cc
 CCFLAGS		=	-Wall -Wextra -Werror #-g3 -fsanitize=address
 
-SRC_PATH	=	jk
+SRC_PATH	=	src
 SRC_FILE	=	main.c \
 				minimap.c \
 				player_main.c \
@@ -33,10 +33,12 @@ LIBFT_FLAGS = -I$(LIBFT_PATH) -L$(LIBFT_PATH) -lft
 MLX_PATH = mlx
 MLX_FLAGS	=	-I$(MLX_PATH) -L$(MLX_PATH) -lmlx -framework OpenGL -framework Appkit
 
+INC = -Iinclude -Ilibft
+
 all	:	$(NAME)
 	
 .c.o	:
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) $(INC) -c $< -o $@
 
 $(NAME)	: $(OBJ)
 	make all -C $(LIBFT_PATH)

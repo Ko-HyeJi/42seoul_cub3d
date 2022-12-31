@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:11:33 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/31 14:18:30 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 15:50:13 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ray_init(t_ray *p_ray, double ang)
 {
-	p_ray->ray_angle = normalize_fisheye(ang);
+	p_ray->ray_angle = normalize(ang);
 	p_ray->xhit_wall = 0;
 	p_ray->yhit_wall = 0;
 	p_ray->distance = 0;
