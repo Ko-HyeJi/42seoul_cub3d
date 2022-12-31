@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:48:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/30 21:17:29 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 15:37:56 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,7 @@ bool	check_edge(t_all *p_all, t_point_db p1, t_point_db p2);
 int		mouse(void);
 
 void	set_point_i(t_point_i *p_point, int x, int y);
+double	if_true_change_val(bool true_false, int set_val, double ret);
+void	update_player2(t_all *p_all, t_point_db	*p_new_player);
 
 #endif
