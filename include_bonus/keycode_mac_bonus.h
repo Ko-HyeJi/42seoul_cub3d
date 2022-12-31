@@ -6,12 +6,12 @@
 /*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:47:23 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 16:01:24 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 16:45:35 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEY_MACOS_BONUS_H
-# define KEY_MACOS_BONUS_H
+#ifndef KEYCODE_MAC_BONUS_H
+# define KEYCODE_MAC_BONUS_H
 
 # define K_ESC 53
 
