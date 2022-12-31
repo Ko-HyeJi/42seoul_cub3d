@@ -6,7 +6,7 @@
 /*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:47:13 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:47:14 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:13:22 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*for_next(char *save)
 	return (str);
 }
 
-char	*rtg(char *save)
+char	*ready_to_go(char *save)
 {
 	char	*str;
 	int		i;
@@ -103,7 +103,7 @@ char	*get_next_line(int fd)
 	save = read_and_save(fd, save);
 	if (!save)
 		return (NULL);
-	line = rtg(save);
+	line = ready_to_go(save);
 	save = for_next(save);
 	return (line);
 }
