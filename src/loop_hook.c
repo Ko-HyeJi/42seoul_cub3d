@@ -6,13 +6,13 @@
 /*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:47:27 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:47:28 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:00:08 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	ft_loop_hook(t_all *p_all)
+static int	ft_loop_hook(t_all *p_all)
 {
 	update_player(p_all);
 	render_map(p_all);

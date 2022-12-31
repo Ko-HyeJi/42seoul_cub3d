@@ -6,13 +6,13 @@
 /*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:11:33 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/31 15:50:13 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:06:11 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ray_init(t_ray *p_ray, double ang)
+void	init_ray(t_ray *p_ray, double ang)
 {
 	p_ray->ray_angle = normalize(ang);
 	p_ray->xhit_wall = 0;

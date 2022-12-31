@@ -6,22 +6,35 @@
 /*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:48:42 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:48:43 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:03:27 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double	ft_cos(t_all *p_all, t_point_db *p_mv)
+static double	ft_cos(t_all *p_all, t_point_db *p_mv)
 {
 	return (p_all->player.x
 		+ (int)(p_mv->y) * cos(p_all->player.rotation_angle - p_mv->x));
 }
 
-double	ft_sin(t_all *p_all, t_point_db *p_mv)
+static double	ft_sin(t_all *p_all, t_point_db *p_mv)
 {
 	return (p_all->player.y
 		+ (int)(p_mv->y) * sin(p_all->player.rotation_angle - p_mv->x));
+}
+
+static void	update_player2(t_all *p_all, t_point_db	*p_new_player)
+{
+	t_point_db	old_player;
+
+	set_point_db(&old_player, p_all->player.x, p_all->player.y);
+	if (!hit_wall((*p_new_player).x, (*p_new_player).y, p_all)
+		&& !check_edge(p_all, old_player, *p_new_player))
+	{
+		p_all->player.x = (*p_new_player).x;
+		p_all->player.y = (*p_new_player).y;
+	}
 }
 
 void	update_player(t_all *p_all)
@@ -50,19 +63,6 @@ void	update_player(t_all *p_all)
 	set_point_db(&mv, mv.x, (int)(dir.x * p_all->player.walk_speed));
 	set_point_db(&new_player, ft_cos(p_all, &mv), ft_sin(p_all, &mv));
 	update_player2(p_all, &new_player);
-}
-
-void	update_player2(t_all *p_all, t_point_db	*p_new_player)
-{
-	t_point_db	old_player;
-
-	set_point_db(&old_player, p_all->player.x, p_all->player.y);
-	if (!hit_wall((*p_new_player).x, (*p_new_player).y, p_all)
-		&& !check_edge(p_all, old_player, *p_new_player))
-	{
-		p_all->player.x = (*p_new_player).x;
-		p_all->player.y = (*p_new_player).y;
-	}
 }
 
 void	draw_player(t_all *p_all)

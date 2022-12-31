@@ -6,24 +6,50 @@
 /*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:48:46 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:48:47 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:03:48 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double	distance_btw_points(double xa, double ya, double xb, double yb)
+static double	distance_btw_points(double xa, double ya, double xb, double yb)
 {
 	return (sqrt((xa - xb) * (xa - xb) + (ya - yb) * (ya - yb)));
 }
 
-void	calc_distance(t_all *p_all, t_temp_ray *hv)
+static void	calc_distance(t_all *p_all, t_temp_ray *hv)
 {
 	if (hv->found_wall_hit)
 		hv->distance = distance_btw_points(p_all->player.x, p_all->player.y,
 				hv->xhit_wall, hv->yhit_wall);
 	else
 		hv->distance = DBL_MAX;
+}
+
+static void	calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b)
+{
+	double	xnext_touch;
+	double	ynext_touch;
+
+	xnext_touch = hv->xintercept;
+	ynext_touch = hv->yintercept;
+	while (xnext_touch >= 0 && xnext_touch <= WINDOW_WID
+		&& ynext_touch >= 0 && ynext_touch <= WINDOW_HEI)
+	{
+		if (hit_wall(xnext_touch - a, ynext_touch - b, p_all))
+		{
+			hv->found_wall_hit = true;
+			hv->xhit_wall = xnext_touch;
+			hv->yhit_wall = ynext_touch;
+			break ;
+		}
+		else
+		{
+			xnext_touch += hv->xstep;
+			ynext_touch += hv->ystep;
+		}
+	}
+	calc_distance(p_all, hv);
 }
 
 void	calc_horz_ray(t_all *p_all, t_temp_ray *p_horz)
@@ -74,30 +100,4 @@ void	calc_vert_ray(t_all *p_all, t_temp_ray *p_vert)
 	else
 		p_vert->ystep *= 1;
 	calc_ray(p_all, p_vert, p_all->ray.ray_faces_left, 0);
-}
-
-void	calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b)
-{
-	double	xnext_touch;
-	double	ynext_touch;
-
-	xnext_touch = hv->xintercept;
-	ynext_touch = hv->yintercept;
-	while (xnext_touch >= 0 && xnext_touch <= WINDOW_WID
-		&& ynext_touch >= 0 && ynext_touch <= WINDOW_HEI)
-	{
-		if (hit_wall(xnext_touch - a, ynext_touch - b, p_all))
-		{
-			hv->found_wall_hit = true;
-			hv->xhit_wall = xnext_touch;
-			hv->yhit_wall = ynext_touch;
-			break ;
-		}
-		else
-		{
-			xnext_touch += hv->xstep;
-			ynext_touch += hv->ystep;
-		}
-	}
-	calc_distance(p_all, hv);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:48:26 by hyko              #+#    #+#             */
-/*   Updated: 2022/12/31 15:40:42 by hyko             ###   ########.fr       */
+/*   Updated: 2022/12/31 16:05:57 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,47 +26,50 @@
 # include <unistd.h>
 # include "structs.h"
 
-# define MINI_SCALE 0.25
-
 # define WINDOW_WID 640
 # define WINDOW_HEI 480
 
-# define TEXTURE_SIZE 64
+# define MINI_SCALE 0.25
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_RELEASE 3
 # define X_EVENT_WINDOW_DESTROY 17
 
-# define RAY_COUNT WINDOW_WID
-
 # define BUFFER_SIZE 333
 
+# define RAY_COUNT WINDOW_WID
 # define WALL_STRIP 1
+
 # define BLUE 0x0000FF
 # define WHITE 0xFFFFFF
 # define BLACK 0x000001
 # define RED 0xFF0000
 
-int		key_press(int keycode, t_all *p_all);
+# define TEXTURE_SIZE 64
+
 void	init_player(t_all *p_all);
+void	init_ray(t_ray *p_ray, double ang);
+void	init_mlx(t_all *p_all);
+void	init_key(t_all *p_all);
+void	init_img_data(t_all *p_all);
+void	init_map(t_all *p_all);
+void	init_map_info(t_all *p_all);
+void	init_3d(t_all *all);
+void	ft_init(t_all *p_all);
+
+void	loop_hook(t_all *p_all);
+
+int		key_press(int keycode, t_all *p_all);
 bool	hit_wall(double x, double y, t_all *p_all);
 void	update_player(t_all *p_all);
-void	fill_square(t_all *p_all, int x, int y, int color);
 void	render_map(t_all *p_all);
 void	draw_player(t_all *p_all);
-int		ft_loop_hook(t_all *p_all);
 int		key_release(int keycode, t_all *p_all);
 
-void	ray_init(t_ray *p_ray, double ang);
-void	calc_distance(t_all *p_all, t_temp_ray *hv);
-double	distance_btw_points(double xa, double ya, double xb, double yb);
-void	calc_ray(t_all *p_all, t_temp_ray *hv, int a, int b);
 void	calc_horz_ray(t_all *p_all, t_temp_ray *p_horz);
 void	calc_vert_ray(t_all *p_all, t_temp_ray *p_vert);
-void	draw_line(t_all *p_all, double dx, double dy);
-void	draw_one_ray(t_all *p_all, double ang, int i);
 void	draw_ray(t_all *p_all);
-double	normalize_fisheye(double ang);
+double	normalize(double ang);
 
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
@@ -87,14 +90,6 @@ void	render_3d(t_all *p_all);
 void	draw_ceiling(t_all *p_all, int ray_num, int wall_top_pixel, int color);
 void	draw_floor(t_all *p_all, int ray_num, int wall_bottom_pixel, int color);
 
-void	init_mlx(t_all *p_all);
-void	init_key(t_all *p_all);
-void	ft_init(t_all *p_all);
-void	loop_hook(t_all *p_all);
-void	init_img_data(t_all *p_all);
-void	init_map(t_all *p_all);
-void	init_map_info(t_all *p_all);
-void	init_3d(t_all *all);
 
 void	parse_map(int argc, char **argv, t_all *p_all);
 void	get_map_info(char *line, t_all *p_all);
@@ -113,6 +108,5 @@ int		mouse(void);
 
 void	set_point_i(t_point_i *p_point, int x, int y);
 double	if_true_change_val(bool true_false, int set_val, double ret);
-void	update_player2(t_all *p_all, t_point_db	*p_new_player);
 
 #endif

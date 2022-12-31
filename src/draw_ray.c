@@ -6,13 +6,13 @@
 /*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:47:06 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:47:07 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:06:11 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_line(t_all *p_all, double dx, double dy)
+static void	draw_line(t_all *p_all, double dx, double dy)
 {
 	t_point_db	xy_ray;
 	t_point_db	delta;
@@ -40,12 +40,12 @@ void	draw_line(t_all *p_all, double dx, double dy)
 	}
 }
 
-void	draw_one_ray(t_all *p_all, double ang, int i)
+static void	draw_one_ray(t_all *p_all, double ang, int i)
 {
 	t_temp_ray	horz;
 	t_temp_ray	vert;
 
-	ray_init(&(p_all->ray), ang);
+	init_ray(&(p_all->ray), ang);
 	calc_horz_ray(p_all, &horz);
 	calc_vert_ray(p_all, &vert);
 	if (vert.distance < horz.distance)

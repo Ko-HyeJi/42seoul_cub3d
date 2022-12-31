@@ -6,13 +6,13 @@
 /*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:48:38 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 15:48:39 by jeekim           ###   ########.fr       */
+/*   Updated: 2022/12/31 16:00:44 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	fill_square(t_all *p_all, int x, int y, int color)
+static void	fill_square(t_all *p_all, int x, int y, int color)
 {
 	int			j;
 	int			k;
