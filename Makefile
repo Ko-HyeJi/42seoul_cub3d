@@ -77,7 +77,7 @@ $(NAME) : $(OBJECT)
 all	:	$(NAME)
 
 bonus :
-	$(MAKE) WITH_BONUS=1 all
+	make WITH_BONUS=1 all
 
 clean	:
 	make clean -C $(LIBFT_PATH)
