@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jeekim <jeekim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 15:48:38 by jeekim            #+#    #+#             */
-/*   Updated: 2022/12/31 16:35:11 by hyko             ###   ########.fr       */
+/*   Updated: 2023/01/02 13:22:12 by jeekim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	fill_square(t_all *p_all, int x, int y, int color)
 		j = 0;
 		while (j <= (int)(MINI_SCALE * p_all->map.col_tile_size))
 		{
-			p_all->img.data[(int)(WINDOW_WID) *(y + k) + (x + j)] = color;
+			p_all->img.data[WINDOW_WID *(y + k) + (x + j)] = color;
 			j++;
 		}
 		k++;
